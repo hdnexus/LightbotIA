@@ -5,11 +5,13 @@ from copy import deepcopy
 from queue import Queue
 import time
 
-counter = 0
-depth = 0
-pathList = []
-closedList = []
-openList = Queue()
+
+############################# INICIO ##############################
+counter = 0 #Counter que foi usado para o printState
+depth = 0 #Profundidade
+pathList = [] #Lista de Abertos
+closedList = [] #Lista de fechados
+openList = Queue() #Queue é um método FIFO (First In First Out)
 
 #Mapa do jogo, o valor das matrizes é a quantidade de blocos(altura)
 matriz = [[0,0,2,0,0,0,0,0],
@@ -31,7 +33,10 @@ movement = {
     2 : (0, 1), # sul
     3 : (-1,0), # oeste
 }
+#################################################################### 
 
+
+############################ CAMINHO ############################### 
 #Função que irá percorrer o caminho da solução
 def getPath(node):
     global pathList
@@ -57,8 +62,10 @@ def printState(state):
     '| Segundo bloco azul =', secondBlueBlock, 
     '| x =', state.robot.x, '| y =', state.robot.y, 
     '| Direção =', turn_rule[state.robot.direction], '| Altura =',state.robot.height, '|')
+####################################################################
 
-############################ ACENDER ############################# 
+
+############################ ACENDER ############################### 
 #Função que irá checar se o bloco é azul e se esta aceso ou não
 def checkLight(node): 
     key = f"{node.state.robot.x} {node.state.robot.y}"
@@ -81,7 +88,8 @@ def lightUp(node):
         openList.put(node) #incrementa lista de abertos 
 #################################################################### 
 
-########################## ANDAR E PULAR ########################## 
+
+########################## ANDAR E PULAR ########################### 
 #Função para checar se o robô pode ir para um determinado bloco
 def checkMovement(state, movement):
     if (state.x + movement[0] < 0 or state.x + movement[0] > 7):
@@ -96,12 +104,48 @@ def get_next_state(robot, movement):
         return Robot(robot.x + movement[0], robot.y + movement[1], robot.height)
     else:
         return None
+
+def walk(node):
+    global depth
+
+def jump(node):
+    global depth
 ####################################################################
 
-####################### VIRAR PARA ESQUERDA ######################## 
+
+####################### VIRAR PARA ESQUERDA ########################
+def turnLeft(node):
+    global depth
+    global openList  
+    newState = deepcopy(node.state)
+    verify = False #####ARRUMAR ESSE VERIFY
+    #verify = checkOpenList(newState)
+    if verify == True: ###### VERIFICAR SE TA CERTO, SE PRECISA DE MAIS IF
+        newState.robot.direction = (newState.robot.direction - 1) % 4
+        auxNode = Node(node, newState)
+        auxNode.setCost(node.getCost() + 1)
+        node.setRobotTurnLeft(auxNode)
+        if depth < auxNode.getCost():
+            depth = auxNode.getCost()
+        openList.put(auxNode)
 ####################################################################
+
 
 ####################### VIRAR PARA DIREITA ######################### 
+def turnRight(node):
+    global depth
+    global openList 
+    newState = deepcopy(node.state)
+    verify = False #####ARRUMAR ESSE VERIFY
+    #verify = checkOpenList(newState)
+    if verify == True: ###### VERIFICAR SE TA CERTO, SE PRECISA DE MAIS IF
+        newState.robot.direction = (newState.robot.direction + 1) % 4
+        auxNode = Node(node, newState)
+        auxNode.setCost(node.getCost() + 1)
+        node.setRobotTurnRight(auxNode)
+        if depth < auxNode.getCost():
+            depth = auxNode.getCost()
+        openList.put(auxNode)
 ####################################################################
 
 
@@ -109,20 +153,21 @@ def get_next_state(robot, movement):
 def breadthSearch(initialState, finalState):
     global depth
     global closedList
-    global openList
-    startTime = time.time()
+    global openList 
+    global pathList
     sucess = False
     failure = False
     solutionNode = None
     openList.put(initialState) 
     root = Node(None, initialState)
     root.setCost(0)
-    while sucess == False and failure == False:
+    startTime = time.time()
+    while failure == False and sucess == False:
         if openList.empty() == True:
             failure = True
             break
         else:
-            node = openList.get()
+            node = openList.get() #Metodo get() retira e retorna o primeiro elemento da fila
             if(node.state == finalState):
                 sucess = True
                 solutionNode = node
@@ -136,8 +181,18 @@ def breadthSearch(initialState, finalState):
 
     stopTime = time.time()
     executionTime = stopTime - startTime
-    print("Execution time: ", executionTime)
-    print("Depth: ", depth)
+
     if sucess == True:
+        print("-->Tempo:", executionTime)
+        print("-->Profundidade:", depth)
         getPath(solutionNode)
-        print('Path: ', pathList)
+        print('-->Caminho da Solução:', pathList)
+        print('-->Custo:', solutionNode.getCost())
+        #print('-->Quantidade de estados fechados: ', len(closedList))
+        #print('-->Quantidade de estados abertos: ', len(openList))
+        #print('-->Lista de estados abertos: ', openList)
+        #print('-->Lista de estados fechados: ', closedList)
+    else:
+        print("--> Tempo:", executionTime)
+        print("Não foi possível encontrar a solução")
+
