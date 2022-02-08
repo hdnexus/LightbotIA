@@ -41,7 +41,7 @@ movement = {
 def checkRepetition(node):
     global closedList
     for auxNode in closedList:
-        if auxNode.state == node.state:
+        if auxNode == node:
             return True
     return False
 
@@ -88,7 +88,7 @@ def lightUp(node):
     global openList
     key = f"{node.state.robot.x} {node.state.robot.y}"
     copyState = deepcopy(node.state)
-    verify = False
+    verify = True
     if checkLight(node) == True:
         copyState.blue_blocks[key] = not copyState.blue_blocks[key]
         auxNode = Node(node, copyState)
@@ -96,26 +96,28 @@ def lightUp(node):
         auxNode.setCost(node.getCost() + 1) 
         verify = checkRepetition(auxNode)
         if verify == False:
-            verify == True
             node.setRobotLightUp(auxNode)
             if depth < auxNode.getCost():
                 depth = auxNode.getCost()
-            #openList.put(auxNode) #incrementa lista de abertos 
+            openList.put(auxNode) #incrementa lista de abertos 
 #################################################################### 
 
 
 ########################## ANDAR E PULAR ########################### 
 #Função que irá checar qual movimento o robô irá fazer
 def getMovement(node):
+    print('entrou getmovement')
     x = node.state.robot.x + movement[node.state.robot.direction][0]
     y = node.state.robot.y + movement[node.state.robot.direction][1]
     height = node.state.robot.height
-    nextHeight = matriz[x][y]
+    nextHeight = matriz[y][x]
+    print("Altura do robô: ", height)
+    print("Altura do bloco: ", nextHeight)
     if (nextHeight == 0):
         return 'cant'
     if (height == nextHeight):
         return 'walk'
-    if(nextHeight - height == 1 or nextHeight - height >= -1):
+    if(nextHeight - height == 1 or nextHeight - height <= -1):
         return 'jump'
         
 
@@ -131,42 +133,42 @@ def checkMovement(node):
 
 
 def walk(node):
-    print('Andou')
     global depth
     global openList
     copyState = deepcopy(node.state)
-    verify = False
+    verify = True
     copyState.robot.x = copyState.robot.x + movement[node.state.robot.direction][0]
     copyState.robot.y = copyState.robot.y + movement[node.state.robot.direction][1]
     if (checkMovement(node) == True):
         auxNode = Node(node, copyState)
-        printState(auxNode.state)
         auxNode.setCost(node.getCost() + 1) 
-        openList.put(auxNode)
-        print('Quantidade de abertos walk:')
-        print(openList.qsize())
         verify = checkRepetition(auxNode)
         if (verify == False): #Se não existe repetição
             if (getMovement(node) == 'walk'): #Verifica qual movimento fazer
+                print('Andou:')
                 node.setRobotWalk(auxNode)
                 if depth < auxNode.getCost():
                     depth = auxNode.getCost()
+                openList.put(auxNode)
+                print('Quantidade de abertos walk:')
+                print(openList.qsize())
                 
 
 def jump(node):
     global depth
     global openList
-    copyState = deepcopy(node.state)
-    verify = False
-    copyState.robot.x = copyState.robot.x + movement[node.state.robot.direction][0]
-    copyState.robot.y = copyState.robot.y + movement[node.state.robot.direction][1]
+    copyStateJump = deepcopy(node.state)
+    verify = True
+    copyStateJump.robot.x = copyStateJump.robot.x + movement[node.state.robot.direction][0]
+    copyStateJump.robot.y = copyStateJump.robot.y + movement[node.state.robot.direction][1]
+    copyStateJump.robot.height = matriz[copyStateJump.robot.y][copyStateJump.robot.x]
     if (checkMovement(node) == True):
-        auxNode = Node(node, copyState)
-        printState(auxNode.state)
+        auxNode = Node(node, copyStateJump)
         auxNode.setCost(node.getCost() + 1) 
         verify = checkRepetition(auxNode)
         if (verify == False): #Se não existe repetição
             if (getMovement(node) == 'jump'): #Verifica qual movimento fazer
+                print('Pulou:')
                 node.setRobotJump(auxNode)
                 if depth < auxNode.getCost():
                     depth = auxNode.getCost()
@@ -238,6 +240,7 @@ def breadthSearch(initialState, finalState):
             print('Quantidade de abertos:')
             print(openList.qsize())
             node = openList.get() #Metodo get() retira e retorna o primeiro elemento da fila
+            printState(node.state)
             print('Estado do robô andar: ')
             print(node.getRobotWalk()) 
             print('Quantidade de abertos depois:')
@@ -246,8 +249,8 @@ def breadthSearch(initialState, finalState):
                 sucess = True
                 solutionNode = node
             else:
-                #lightUp(node)
-                walk(node)
+                lightUp(node)
+                #walk(node)
                 #jump(node)
                 #turnLeft(node)
                 #turnRight(node)

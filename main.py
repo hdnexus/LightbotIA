@@ -13,10 +13,6 @@ initial_state = State({'2 0' : False,'3 7' : False}, Robot(3,7,0,2))
 #Estado final do problema (estado solução)
 final_state = State({'2 0' : True,'3 7' : True}, Robot(2,0,0,2))
 
-def function(initialState):
-    root = Node(None,initialState)
-    robot = root.state.blue_blocks['0 2']
-    print(robot)
 
 def searchSelection():
     choice = int(input('-> Digite o número da busca desejada: '))
