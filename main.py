@@ -9,9 +9,9 @@ from greedySearch import greedySearch
 from aStarSearch import aStarSearch 
 
 #Estado inicial do problema
-initial_state = State({'0 2' : False,'7 3' : False}, Robot(7,3,0,2))
+initial_state = State({'2 0' : False,'3 7' : False}, Robot(3,7,0,2))
 #Estado final do problema (estado solução)
-final_state = State({'0 2' : True,'7 3' : True}, Robot(0,2,0,2))
+final_state = State({'2 0' : True,'3 7' : True}, Robot(2,0,0,2))
 
 def function(initialState):
     root = Node(None,initialState)

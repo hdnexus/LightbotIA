@@ -36,7 +36,15 @@ movement = {
 #################################################################### 
 
 
-############################ CAMINHO ############################### 
+######################### AUXILIARES ############################### 
+#Função que irá checar se não existe repetição
+def checkRepetition(node):
+    global closedList
+    for auxNode in closedList:
+        if auxNode.state == node.state:
+            return True
+    return False
+
 #Função que irá percorrer o caminho da solução
 def getPath(node):
     global pathList
@@ -51,9 +59,9 @@ def getPath(node):
 def printState(state):
     firstBlueBlock = 'Apagado'
     secondBlueBlock = 'Apagado'
-    if(state.blue_blocks['7 3']):
+    if(state.blue_blocks['3 7']):
         firstBlueBlock = 'Ligado'
-    if(state.blue_blocks['0 2']):
+    if(state.blue_blocks['2 0']):
         secondBlueBlock = 'Ligado'
     global counter 
     counter = counter + 1
@@ -66,64 +74,120 @@ def printState(state):
 
 
 ############################ ACENDER ############################### 
-#Função que irá checar se o bloco é azul e se esta aceso ou não
+#Função que irá checar se o bloco é azul esta aceso ou não
 def checkLight(node): 
     key = f"{node.state.robot.x} {node.state.robot.y}"
         # se a posicao atual do robo é um bloco azul, o bloco recebe a negação dele mesmo ou seja se True -> False e se False -> True
     if (key in node.state.blue_blocks):
-        node.state.blue_blocks[key] = not node.state.blue_blocks[key]
         return True
     return False
 
-#Função que irá acender os blocos azuis
+#Função que irá gerar um nó filho acendendo ou apagando um bloco azul
 def lightUp(node):
     global depth
     global openList
+    key = f"{node.state.robot.x} {node.state.robot.y}"
+    copyState = deepcopy(node.state)
     verify = False
     if checkLight(node) == True:
-        #atualizar estado
-        #criar nó auxiliar
-        #nó auxiliar custo node.setCost(node.getCost() + 1)
-        #cria filho com nó auxiliar node.setRobotLightUp(node) 
-        openList.put(node) #incrementa lista de abertos 
+        copyState.blue_blocks[key] = not copyState.blue_blocks[key]
+        auxNode = Node(node, copyState)
+        #printState(auxNode.state)
+        auxNode.setCost(node.getCost() + 1) 
+        verify = checkRepetition(auxNode)
+        if verify == False:
+            verify == True
+            node.setRobotLightUp(auxNode)
+            if depth < auxNode.getCost():
+                depth = auxNode.getCost()
+            #openList.put(auxNode) #incrementa lista de abertos 
 #################################################################### 
 
 
 ########################## ANDAR E PULAR ########################### 
-#Função para checar se o robô pode ir para um determinado bloco
-def checkMovement(state, movement):
-    if (state.x + movement[0] < 0 or state.x + movement[0] > 7):
+#Função que irá checar qual movimento o robô irá fazer
+def getMovement(node):
+    x = node.state.robot.x + movement[node.state.robot.direction][0]
+    y = node.state.robot.y + movement[node.state.robot.direction][1]
+    height = node.state.robot.height
+    nextHeight = matriz[x][y]
+    if (nextHeight == 0):
+        return 'cant'
+    if (height == nextHeight):
+        return 'walk'
+    if(nextHeight - height == 1 or nextHeight - height >= -1):
+        return 'jump'
+        
+
+#Função para checar se o robô pode ir para uma direção
+def checkMovement(node):
+    x = node.state.robot.x + movement[node.state.robot.direction][0]
+    y = node.state.robot.y + movement[node.state.robot.direction][1]
+    if (x < 0 or x > 7):
         return False
-    if (state.y + movement[1] < 0 or state.y + movement[1] > 7):
+    if (y < 0 or y > 7):
         return False
     return True
 
-#Função para pegar o bloco na frente do robô
-def get_next_state(robot, movement):
-    if (checkMovement(robot, movement)):
-        return Robot(robot.x + movement[0], robot.y + movement[1], robot.height)
-    else:
-        return None
 
 def walk(node):
+    print('Andou')
     global depth
+    global openList
+    copyState = deepcopy(node.state)
+    verify = False
+    copyState.robot.x = copyState.robot.x + movement[node.state.robot.direction][0]
+    copyState.robot.y = copyState.robot.y + movement[node.state.robot.direction][1]
+    if (checkMovement(node) == True):
+        auxNode = Node(node, copyState)
+        printState(auxNode.state)
+        auxNode.setCost(node.getCost() + 1) 
+        openList.put(auxNode)
+        print('Quantidade de abertos walk:')
+        print(openList.qsize())
+        verify = checkRepetition(auxNode)
+        if (verify == False): #Se não existe repetição
+            if (getMovement(node) == 'walk'): #Verifica qual movimento fazer
+                node.setRobotWalk(auxNode)
+                if depth < auxNode.getCost():
+                    depth = auxNode.getCost()
+                
 
 def jump(node):
     global depth
+    global openList
+    copyState = deepcopy(node.state)
+    verify = False
+    copyState.robot.x = copyState.robot.x + movement[node.state.robot.direction][0]
+    copyState.robot.y = copyState.robot.y + movement[node.state.robot.direction][1]
+    if (checkMovement(node) == True):
+        auxNode = Node(node, copyState)
+        printState(auxNode.state)
+        auxNode.setCost(node.getCost() + 1) 
+        verify = checkRepetition(auxNode)
+        if (verify == False): #Se não existe repetição
+            if (getMovement(node) == 'jump'): #Verifica qual movimento fazer
+                node.setRobotJump(auxNode)
+                if depth < auxNode.getCost():
+                    depth = auxNode.getCost()
+                openList.put(auxNode)
+        
 ####################################################################
 
 
 ####################### VIRAR PARA ESQUERDA ########################
+#Função que irá gerar um nó filho com a direção do robô virado para a esquerda
 def turnLeft(node):
     global depth
     global openList  
-    newState = deepcopy(node.state)
-    verify = False #####ARRUMAR ESSE VERIFY
-    #verify = checkOpenList(newState)
-    if verify == True: ###### VERIFICAR SE TA CERTO, SE PRECISA DE MAIS IF
-        newState.robot.direction = (newState.robot.direction - 1) % 4
-        auxNode = Node(node, newState)
+    copyState = deepcopy(node.state)
+    verify = True #Considero que existe repetição 
+    copyState.robot.direction = (copyState.robot.direction - 1) % 4
+    auxNode = Node(node, copyState)
+    verify = checkRepetition(auxNode) #Irá checar se não existe repetição
+    if (verify == False): #Se não existe repetição
         auxNode.setCost(node.getCost() + 1)
+        printState(auxNode.state)
         node.setRobotTurnLeft(auxNode)
         if depth < auxNode.getCost():
             depth = auxNode.getCost()
@@ -132,17 +196,19 @@ def turnLeft(node):
 
 
 ####################### VIRAR PARA DIREITA ######################### 
+#Função que irá gerar um nó filho com a direção do robô virado para a direita
 def turnRight(node):
     global depth
-    global openList 
-    newState = deepcopy(node.state)
-    verify = False #####ARRUMAR ESSE VERIFY
-    #verify = checkOpenList(newState)
-    if verify == True: ###### VERIFICAR SE TA CERTO, SE PRECISA DE MAIS IF
-        newState.robot.direction = (newState.robot.direction + 1) % 4
-        auxNode = Node(node, newState)
+    global openList  
+    copyState = deepcopy(node.state)
+    verify = True
+    copyState.robot.direction = (copyState.robot.direction + 1) % 4
+    auxNode = Node(node, copyState)
+    verify = checkRepetition(auxNode)
+    if (verify == False):
         auxNode.setCost(node.getCost() + 1)
-        node.setRobotTurnRight(auxNode)
+        printState(auxNode.state)
+        node.setRobotTurnLeft(auxNode)
         if depth < auxNode.getCost():
             depth = auxNode.getCost()
         openList.put(auxNode)
@@ -158,26 +224,36 @@ def breadthSearch(initialState, finalState):
     sucess = False
     failure = False
     solutionNode = None
-    openList.put(initialState) 
     root = Node(None, initialState)
+    openList.put(root) 
     root.setCost(0)
     startTime = time.time()
+    c = 0
     while failure == False and sucess == False:
         if openList.empty() == True:
+            print('Entrou aqui!')
             failure = True
             break
         else:
+            print('Quantidade de abertos:')
+            print(openList.qsize())
             node = openList.get() #Metodo get() retira e retorna o primeiro elemento da fila
-            if(node.state == finalState):
+            print('Estado do robô andar: ')
+            print(node.getRobotWalk()) 
+            print('Quantidade de abertos depois:')
+            print(openList.qsize())
+            if(node == finalState):
                 sucess = True
                 solutionNode = node
             else:
-                lightUp(node)
+                #lightUp(node)
                 walk(node)
-                jump(node)
-                turnLeft(node)
-                turnRight(node)
+                #jump(node)
+                #turnLeft(node)
+                #turnRight(node)
                 closedList.append(node)
+                print('Lista fechada depois:')
+                print(closedList)
 
     stopTime = time.time()
     executionTime = stopTime - startTime

@@ -29,7 +29,7 @@ class Node():
 
     def getRobotLightUp(self):
         return self.robotLightUp
-    def getRobotLightUp(self, node):
+    def setRobotLightUp(self, node):
         self.robotLightUp = node
 
 
