@@ -7,9 +7,11 @@ import time
 
 
 ############################# INICIO ##############################
+f = open('example.txt', 'w')
 counter = 0 #Counter que foi usado para o printState
 depth = 0 #Profundidade
 pathList = [] #Lista de Abertos
+hashClosedList = []
 closedList = [] #Lista de fechados
 openList = Queue() #Queue é um método FIFO (First In First Out)
 
@@ -38,13 +40,14 @@ movement = {
 
 ######################### AUXILIARES ############################### 
 #Função que irá checar se não existe repetição
-def checkRepetition(node):
-    global closedList
-    for auxNode in closedList:
-        if auxNode == node:
-            return True
+def checkHash(node):
+    robotState = (node.robot.x, node.robot.y, node.robot.direction, node.robot.height, node.robot.firstBlueBlock, node.robot.secondBlueBlock)
+    hashNode = hash(robotState)
+    for hashValue in hashClosedList:
+        if hashValue == hashNode:
+            return True         
     return False
-
+    
 #Função que irá percorrer o caminho da solução
 def getPath(node):
     global pathList
@@ -56,29 +59,29 @@ def getPath(node):
     pathList.reverse() 
 
 #Função que servirá pra imprimir um determinado estado
-def printState(state):
-    firstBlueBlock = 'Apagado'
-    secondBlueBlock = 'Apagado'
-    if(state.blue_blocks['3 7']):
-        firstBlueBlock = 'Ligado'
-    if(state.blue_blocks['2 0']):
-        secondBlueBlock = 'Ligado'
+def printState(robot):
+    f.write((str(robot.x) + ' ' + str(robot.y) + ' ' + str(robot.direction) + ' ' + str(robot.height) + ' ' + str(robot.firstBlueBlock) + ' ' + str(robot.secondBlueBlock)) + '\n')  
+    
+    first_BlueBlock = 'Apagado'
+    second_BlueBlock = 'Apagado'
+    if(robot.firstBlueBlock == True):
+        first_BlueBlock = 'Ligado'
+    if(robot.secondBlueBlock == True):
+        second_BlueBlock = 'Ligado'
     global counter 
     counter = counter + 1
     print('--',str(counter) + 'º', 'Estado')
-    print('| Primeiro bloco azul =', firstBlueBlock,
-    '| Segundo bloco azul =', secondBlueBlock, 
-    '| x =', state.robot.x, '| y =', state.robot.y, 
-    '| Direção =', turn_rule[state.robot.direction], '| Altura =',state.robot.height, '|')
+    print('| Primeiro bloco azul =', first_BlueBlock,
+    '| Segundo bloco azul =', second_BlueBlock, 
+    '| x =', robot.x, '| y =', robot.y, 
+    '| Direção =', turn_rule[robot.direction], '| Altura =',robot.height, '|')
 ####################################################################
 
 
 ############################ ACENDER ############################### 
-#Função que irá checar se o bloco é azul esta aceso ou não
+#Função que irá checar se o bloco é azul
 def checkLight(node): 
-    key = f"{node.state.robot.x} {node.state.robot.y}"
-        # se a posicao atual do robo é um bloco azul, o bloco recebe a negação dele mesmo ou seja se True -> False e se False -> True
-    if (key in node.state.blue_blocks):
+    if((node.robot.y == 7 and node.robot.x == 3) or (node.robot.y == 0 and node.robot.x == 2) ):
         return True
     return False
 
@@ -86,15 +89,17 @@ def checkLight(node):
 def lightUp(node):
     global depth
     global openList
-    key = f"{node.state.robot.x} {node.state.robot.y}"
-    copyState = deepcopy(node.state)
+    copyState = deepcopy(node.robot)
     verify = True
     if checkLight(node) == True:
-        copyState.blue_blocks[key] = not copyState.blue_blocks[key]
-        auxNode = Node(node, copyState)
+        if(node.robot.y == 7 and node.robot.x == 3): #Se for o primeiro bloco azul
+            copyState.firstBlueBlock = not copyState.firstBlueBlock
+        if(node.robot.y == 0 and node.robot.x == 2): #Se for o segundo bloco azul
+            copyState.secondBlueBlock = not copyState.secondBlueBlock
+        auxNode = Node(node, copyState) #Nó filho receberá os valores atualizados
         #printState(auxNode.state)
         auxNode.setCost(node.getCost() + 1) 
-        verify = checkRepetition(auxNode)
+        verify = checkHash(auxNode)
         if verify == False:
             node.setRobotLightUp(auxNode)
             if depth < auxNode.getCost():
@@ -106,13 +111,10 @@ def lightUp(node):
 ########################## ANDAR E PULAR ########################### 
 #Função que irá checar qual movimento o robô irá fazer
 def getMovement(node):
-    print('entrou getmovement')
-    x = node.state.robot.x + movement[node.state.robot.direction][0]
-    y = node.state.robot.y + movement[node.state.robot.direction][1]
-    height = node.state.robot.height
+    x = node.robot.x + movement[node.robot.direction][0]
+    y = node.robot.y + movement[node.robot.direction][1]
+    height = node.robot.height
     nextHeight = matriz[y][x]
-    print("Altura do robô: ", height)
-    print("Altura do bloco: ", nextHeight)
     if (nextHeight == 0):
         return 'cant'
     if (height == nextHeight):
@@ -123,8 +125,8 @@ def getMovement(node):
 
 #Função para checar se o robô pode ir para uma direção
 def checkMovement(node):
-    x = node.state.robot.x + movement[node.state.robot.direction][0]
-    y = node.state.robot.y + movement[node.state.robot.direction][1]
+    x = node.robot.x + movement[node.robot.direction][0]
+    y = node.robot.y + movement[node.robot.direction][1]
     if (x < 0 or x > 7):
         return False
     if (y < 0 or y > 7):
@@ -135,40 +137,37 @@ def checkMovement(node):
 def walk(node):
     global depth
     global openList
-    copyState = deepcopy(node.state)
+    copyState = deepcopy(node.robot)
     verify = True
-    copyState.robot.x = copyState.robot.x + movement[node.state.robot.direction][0]
-    copyState.robot.y = copyState.robot.y + movement[node.state.robot.direction][1]
     if (checkMovement(node) == True):
+        copyState.x = copyState.x + movement[node.robot.direction][0]
+        copyState.y = copyState.y + movement[node.robot.direction][1]
         auxNode = Node(node, copyState)
         auxNode.setCost(node.getCost() + 1) 
-        verify = checkRepetition(auxNode)
+        verify = checkHash(auxNode)
         if (verify == False): #Se não existe repetição
             if (getMovement(node) == 'walk'): #Verifica qual movimento fazer
-                print('Andou:')
                 node.setRobotWalk(auxNode)
                 if depth < auxNode.getCost():
                     depth = auxNode.getCost()
                 openList.put(auxNode)
-                print('Quantidade de abertos walk:')
                 print(openList.qsize())
                 
 
 def jump(node):
     global depth
     global openList
-    copyStateJump = deepcopy(node.state)
+    copyStateJump = deepcopy(node.robot)
     verify = True
-    copyStateJump.robot.x = copyStateJump.robot.x + movement[node.state.robot.direction][0]
-    copyStateJump.robot.y = copyStateJump.robot.y + movement[node.state.robot.direction][1]
-    copyStateJump.robot.height = matriz[copyStateJump.robot.y][copyStateJump.robot.x]
     if (checkMovement(node) == True):
+        copyStateJump.x = copyStateJump.x + movement[node.robot.direction][0]
+        copyStateJump.y = copyStateJump.y + movement[node.robot.direction][1]
+        copyStateJump.height = matriz[copyStateJump.y][copyStateJump.x]
         auxNode = Node(node, copyStateJump)
         auxNode.setCost(node.getCost() + 1) 
-        verify = checkRepetition(auxNode)
+        verify = checkHash(auxNode)
         if (verify == False): #Se não existe repetição
             if (getMovement(node) == 'jump'): #Verifica qual movimento fazer
-                print('Pulou:')
                 node.setRobotJump(auxNode)
                 if depth < auxNode.getCost():
                     depth = auxNode.getCost()
@@ -182,14 +181,13 @@ def jump(node):
 def turnLeft(node):
     global depth
     global openList  
-    copyState = deepcopy(node.state)
+    copyState = deepcopy(node.robot)
     verify = True #Considero que existe repetição 
-    copyState.robot.direction = (copyState.robot.direction - 1) % 4
+    copyState.direction = (copyState.direction - 1) % 4
     auxNode = Node(node, copyState)
-    verify = checkRepetition(auxNode) #Irá checar se não existe repetição
+    verify = checkHash(auxNode) #Irá checar se não existe repetição
     if (verify == False): #Se não existe repetição
         auxNode.setCost(node.getCost() + 1)
-        printState(auxNode.state)
         node.setRobotTurnLeft(auxNode)
         if depth < auxNode.getCost():
             depth = auxNode.getCost()
@@ -202,14 +200,14 @@ def turnLeft(node):
 def turnRight(node):
     global depth
     global openList  
-    copyState = deepcopy(node.state)
+    copyState = deepcopy(node.robot)
     verify = True
-    copyState.robot.direction = (copyState.robot.direction + 1) % 4
+    copyState.direction = (copyState.direction + 1) % 4
     auxNode = Node(node, copyState)
-    verify = checkRepetition(auxNode)
+    verify = checkHash(auxNode)
     if (verify == False):
         auxNode.setCost(node.getCost() + 1)
-        printState(auxNode.state)
+        printState(auxNode.robot)
         node.setRobotTurnLeft(auxNode)
         if depth < auxNode.getCost():
             depth = auxNode.getCost()
@@ -230,34 +228,30 @@ def breadthSearch(initialState, finalState):
     openList.put(root) 
     root.setCost(0)
     startTime = time.time()
-    c = 0
     while failure == False and sucess == False:
         if openList.empty() == True:
             print('Entrou aqui!')
             failure = True
             break
         else:
-            print('Quantidade de abertos:')
-            print(openList.qsize())
             node = openList.get() #Metodo get() retira e retorna o primeiro elemento da fila
-            printState(node.state)
-            print('Estado do robô andar: ')
-            print(node.getRobotWalk()) 
-            print('Quantidade de abertos depois:')
-            print(openList.qsize())
-            if(node == finalState):
+            robotState = (node.robot.x, node.robot.y, node.robot.direction, node.robot.height, node.robot.firstBlueBlock, node.robot.secondBlueBlock)
+            final_State = (finalState.x, finalState.y, finalState.direction, finalState.height, finalState.firstBlueBlock, finalState.secondBlueBlock) 
+            printState(node.robot)
+            if(robotState == final_State):
+                f.write("sucesso!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 sucess = True
                 solutionNode = node
             else:
                 lightUp(node)
-                #walk(node)
-                #jump(node)
-                #turnLeft(node)
-                #turnRight(node)
-                closedList.append(node)
-                print('Lista fechada depois:')
-                print(closedList)
+                walk(node)
+                jump(node)
+                turnLeft(node)
+                turnRight(node)
+                hashNode = hash(robotState)
+                hashClosedList.append(hashNode)
 
+    f.close()
     stopTime = time.time()
     executionTime = stopTime - startTime
 

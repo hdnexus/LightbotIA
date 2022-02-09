@@ -1,6 +1,6 @@
 #classe do nó
 class Node():
-    def __init__(self, father, state):
+    def __init__(self, father, robot):
         self.robotWalk = None #nó filho de andar
         self.robotJump = None #nó filho de pular
         self.robotLightUp = None #nó filho de acender
@@ -9,13 +9,13 @@ class Node():
         self.cost = 0 #custo
         self.greedyCost = 0 #custo guloso
         self.nodeFather = father #nó pai
-        self.state = state #estado do nó
+        self.robot = robot #estado do nó
 
     
-    def setState(self, state):
-        self.state = state
-    def getState(self):
-        return self.state
+    def setRobot(self, robot):
+        self.robot = robot
+    def getRobot(self):
+        return self.robot
     
     def getRobotWalk(self):
         return self.robotWalk

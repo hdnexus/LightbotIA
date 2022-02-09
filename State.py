@@ -4,7 +4,11 @@ class State:
         self.blue_blocks = blue_blocks
         self.robot = robot
     
+    def hash(self):
+        return hash(( self.robot, hash(tuple(self.blue_blocks.values())) ))
+    
     '''
+    
     def jump(self):
         pass
 

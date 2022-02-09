@@ -9,9 +9,9 @@ from greedySearch import greedySearch
 from aStarSearch import aStarSearch 
 
 #Estado inicial do problema
-initial_state = State({'2 0' : False,'3 7' : False}, Robot(3,7,0,2))
+initial_state = Robot(3,7,0,2,False,False)
 #Estado final do problema (estado solução)
-final_state = State({'2 0' : True,'3 7' : True}, Robot(2,0,0,2))
+final_state = Robot(2,0,0,2,True,True)
 
 
 def searchSelection():
