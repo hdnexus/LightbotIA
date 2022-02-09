@@ -1,5 +1,4 @@
 from Node import *
-from State import *
 from Robot import *
 from copy import deepcopy
 from queue import Queue
@@ -9,7 +8,6 @@ import time
 ############################# INICIO ##############################
 f = open('example.txt', 'w')
 counter = 0 #Counter que foi usado para o printState
-depth = 0 #Profundidade
 pathList = [] #Lista de Abertos
 hashClosedList = []
 closedList = [] #Lista de fechados
@@ -78,19 +76,16 @@ def solutionPathPrint(node):
 ############################ ACENDER ############################### 
 #Função que irá checar se o bloco é azul
 def checkLight(node): 
-    if((node.robot.y == 7 and node.robot.x == 3) or (node.robot.y == 0 and node.robot.x == 2) ):
+    if(node.robot.y == 0 and node.robot.x == 2 ):
         return True
     return False
 
 #Função que irá gerar um nó filho acendendo ou apagando um bloco azul
 def lightUp(node):
-    global depth
     global openList
     copyState = deepcopy(node.robot)
     verify = True
     if checkLight(node) == True:
-        if(node.robot.y == 7 and node.robot.x == 3): #Se for o primeiro bloco azul
-            copyState.firstBlueBlock = not copyState.firstBlueBlock
         if(node.robot.y == 0 and node.robot.x == 2): #Se for o segundo bloco azul
             copyState.secondBlueBlock = not copyState.secondBlueBlock
         auxNode = Node(node, copyState) #Nó filho receberá os valores atualizados
@@ -98,8 +93,6 @@ def lightUp(node):
         if verify == False:
             auxNode.setCost(node.getCost() + 1) 
             node.setRobotLightUp(auxNode)
-            if depth < auxNode.getCost():
-                depth = auxNode.getCost()
             openList.put(auxNode) #incrementa lista de abertos 
 #################################################################### 
 
@@ -131,7 +124,6 @@ def checkMovement(node):
 
 
 def walk(node):
-    global depth
     global openList
     copyState = deepcopy(node.robot)
     verify = True
@@ -145,14 +137,11 @@ def walk(node):
             if (getMovement(node) == 'walk'): #Verifica qual movimento fazer
                 auxNode.setCost(node.getCost() + 1) 
                 node.setRobotWalk(auxNode)
-                if depth < auxNode.getCost():
-                    depth = auxNode.getCost()
                 openList.put(auxNode)
                 
                 
 
 def jump(node):
-    global depth
     global openList
     copyStateJump = deepcopy(node.robot)
     verify = True
@@ -166,8 +155,6 @@ def jump(node):
             if (getMovement(node) == 'jump'): #Verifica qual movimento fazer
                 auxNode.setCost(node.getCost() + 1) 
                 node.setRobotJump(auxNode)
-                if depth < auxNode.getCost():
-                    depth = auxNode.getCost()
                 openList.put(auxNode)
         
 ####################################################################
@@ -176,7 +163,6 @@ def jump(node):
 ####################### VIRAR PARA ESQUERDA ########################
 #Função que irá gerar um nó filho com a direção do robô virado para a esquerda
 def turnLeft(node):
-    global depth
     global openList  
     copyState = deepcopy(node.robot)
     verify = True #Considero que existe repetição 
@@ -186,8 +172,6 @@ def turnLeft(node):
     if (verify == False): #Se não existe repetição
         auxNode.setCost(node.getCost() + 1)
         node.setRobotTurnLeft(auxNode)
-        if depth < auxNode.getCost():
-            depth = auxNode.getCost()
         openList.put(auxNode)
 ####################################################################
 
@@ -195,7 +179,6 @@ def turnLeft(node):
 ####################### VIRAR PARA DIREITA ######################### 
 #Função que irá gerar um nó filho com a direção do robô virado para a direita
 def turnRight(node):
-    global depth
     global openList  
     copyState = deepcopy(node.robot)
     verify = True
@@ -205,15 +188,12 @@ def turnRight(node):
     if (verify == False):
         auxNode.setCost(node.getCost() + 1)
         node.setRobotTurnLeft(auxNode)
-        if depth < auxNode.getCost():
-            depth = auxNode.getCost()
         openList.put(auxNode)
 ####################################################################
 
 
 #Função que irá realizar a busca em largura
 def breadthSearch(initialState, finalState):
-    global depth
     global closedList
     global openList 
     global pathList
@@ -250,12 +230,11 @@ def breadthSearch(initialState, finalState):
 
     if sucess == True:
         print("-->Tempo:", executionTime)
-        print("-->Profundidade:", depth)
         print('-->Custo:', solutionNode.getCost())
         print('-->Quantidade de estados que foram fechados: ', len(hashClosedList))
         print('-->Caminho da Solução:')
         solutionPathPrint(solutionNode)
-    else:
+    else: 
         print("--> Tempo:", executionTime)
         print("Não foi possível encontrar a solução")
 

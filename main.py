@@ -1,7 +1,6 @@
 from copy import deepcopy
 from Node import *
 from Robot import *
-from State import *
 from breadthFirstSearch import breadthSearch
 from orderedSearch import orderedSearch
 from depthFirstSearch import depthSearch
@@ -9,7 +8,7 @@ from greedySearch import greedySearch
 from aStarSearch import aStarSearch 
 
 #Estado inicial do problema
-initial_state = Robot(3,7,0,2,False,False)
+initial_state = Robot(3,7,0,2,True,False)
 #Estado final do problema (estado solução)
 final_state = Robot(2,0,0,2,True,True)
 

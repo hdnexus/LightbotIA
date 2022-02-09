@@ -8,7 +8,7 @@ class Robot:
         self.firstBlueBlock = firstBlueBlock
         self.secondBlueBlock = secondBlueBlock
     
-    '''
+    
     def __hash__(self):
         return hash(( self.x, self.y, self.direction, self.height ))
-    '''
+   
