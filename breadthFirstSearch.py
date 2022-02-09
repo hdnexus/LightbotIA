@@ -47,7 +47,10 @@ def checkHash(node):
         if hashValue == hashNode:
             return True         
     return False
-    
+#################################################################### 
+
+
+########################### CAMINHO ################################
 #Função que irá percorrer o caminho da solução
 def getPath(node):
     global pathList
@@ -58,23 +61,17 @@ def getPath(node):
         auxNode = auxNode.getNodeFather()
     pathList.reverse() 
 
-#Função que servirá pra imprimir um determinado estado
-def printState(robot):
-    f.write((str(robot.x) + ' ' + str(robot.y) + ' ' + str(robot.direction) + ' ' + str(robot.height) + ' ' + str(robot.firstBlueBlock) + ' ' + str(robot.secondBlueBlock)) + '\n')  
-    
-    first_BlueBlock = 'Apagado'
-    second_BlueBlock = 'Apagado'
-    if(robot.firstBlueBlock == True):
-        first_BlueBlock = 'Ligado'
-    if(robot.secondBlueBlock == True):
-        second_BlueBlock = 'Ligado'
-    global counter 
-    counter = counter + 1
-    print('--',str(counter) + 'º', 'Estado')
-    print('| Primeiro bloco azul =', first_BlueBlock,
-    '| Segundo bloco azul =', second_BlueBlock, 
-    '| x =', robot.x, '| y =', robot.y, 
-    '| Direção =', turn_rule[robot.direction], '| Altura =',robot.height, '|')
+#Função que servirá pra imprimir o caminho solução
+def solutionPathPrint(node):
+    getPath(node)
+    count = 0
+    for robotState in pathList:
+        print('--',str(count) + 'º', 'Estado')
+        print('| Primeiro bloco azul =', robotState.robot.firstBlueBlock,
+        '| Segundo bloco azul =', robotState.robot.secondBlueBlock, 
+        '| x =', robotState.robot.x, '| y =', robotState.robot.y, 
+        '| Direção =', turn_rule[robotState.robot.direction], '| Altura =',robotState.robot.height, '|')
+        count = count + 1
 ####################################################################
 
 
@@ -97,10 +94,9 @@ def lightUp(node):
         if(node.robot.y == 0 and node.robot.x == 2): #Se for o segundo bloco azul
             copyState.secondBlueBlock = not copyState.secondBlueBlock
         auxNode = Node(node, copyState) #Nó filho receberá os valores atualizados
-        #printState(auxNode.state)
-        auxNode.setCost(node.getCost() + 1) 
         verify = checkHash(auxNode)
         if verify == False:
+            auxNode.setCost(node.getCost() + 1) 
             node.setRobotLightUp(auxNode)
             if depth < auxNode.getCost():
                 depth = auxNode.getCost()
@@ -143,15 +139,16 @@ def walk(node):
         copyState.x = copyState.x + movement[node.robot.direction][0]
         copyState.y = copyState.y + movement[node.robot.direction][1]
         auxNode = Node(node, copyState)
-        auxNode.setCost(node.getCost() + 1) 
+        
         verify = checkHash(auxNode)
         if (verify == False): #Se não existe repetição
             if (getMovement(node) == 'walk'): #Verifica qual movimento fazer
+                auxNode.setCost(node.getCost() + 1) 
                 node.setRobotWalk(auxNode)
                 if depth < auxNode.getCost():
                     depth = auxNode.getCost()
                 openList.put(auxNode)
-                print(openList.qsize())
+                
                 
 
 def jump(node):
@@ -164,10 +161,10 @@ def jump(node):
         copyStateJump.y = copyStateJump.y + movement[node.robot.direction][1]
         copyStateJump.height = matriz[copyStateJump.y][copyStateJump.x]
         auxNode = Node(node, copyStateJump)
-        auxNode.setCost(node.getCost() + 1) 
         verify = checkHash(auxNode)
         if (verify == False): #Se não existe repetição
             if (getMovement(node) == 'jump'): #Verifica qual movimento fazer
+                auxNode.setCost(node.getCost() + 1) 
                 node.setRobotJump(auxNode)
                 if depth < auxNode.getCost():
                     depth = auxNode.getCost()
@@ -207,7 +204,6 @@ def turnRight(node):
     verify = checkHash(auxNode)
     if (verify == False):
         auxNode.setCost(node.getCost() + 1)
-        printState(auxNode.robot)
         node.setRobotTurnLeft(auxNode)
         if depth < auxNode.getCost():
             depth = auxNode.getCost()
@@ -230,16 +226,13 @@ def breadthSearch(initialState, finalState):
     startTime = time.time()
     while failure == False and sucess == False:
         if openList.empty() == True:
-            print('Entrou aqui!')
             failure = True
             break
         else:
             node = openList.get() #Metodo get() retira e retorna o primeiro elemento da fila
             robotState = (node.robot.x, node.robot.y, node.robot.direction, node.robot.height, node.robot.firstBlueBlock, node.robot.secondBlueBlock)
             final_State = (finalState.x, finalState.y, finalState.direction, finalState.height, finalState.firstBlueBlock, finalState.secondBlueBlock) 
-            printState(node.robot)
             if(robotState == final_State):
-                f.write("sucesso!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 sucess = True
                 solutionNode = node
             else:
@@ -258,13 +251,10 @@ def breadthSearch(initialState, finalState):
     if sucess == True:
         print("-->Tempo:", executionTime)
         print("-->Profundidade:", depth)
-        getPath(solutionNode)
-        print('-->Caminho da Solução:', pathList)
         print('-->Custo:', solutionNode.getCost())
-        #print('-->Quantidade de estados fechados: ', len(closedList))
-        #print('-->Quantidade de estados abertos: ', len(openList))
-        #print('-->Lista de estados abertos: ', openList)
-        #print('-->Lista de estados fechados: ', closedList)
+        print('-->Quantidade de estados que foram fechados: ', len(hashClosedList))
+        print('-->Caminho da Solução:')
+        solutionPathPrint(solutionNode)
     else:
         print("--> Tempo:", executionTime)
         print("Não foi possível encontrar a solução")
