@@ -316,10 +316,10 @@ def orderedSearch(initialState, finalState):
         print("-->Tempo:", executionTime)
         print('-->Custo:', solutionCost)
         print('-->Caminho da Solução:')
+        os.write("-->Tempo: " + str(executionTime) + '\n')
         solutionPathPrint(solutionNode)
 
-        os.write("-->Tempo: " + str(executionTime) + '\n')
-        os.write('-->Custo:' + str(solutionCost) + '\n')
+        os.write('-->Custo:' + '\n')
         os.write('-->Caminho da Solução:' +
                  str(solutionPathPrint(solutionNode)) + '\n')
 

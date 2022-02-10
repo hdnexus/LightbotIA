@@ -282,10 +282,9 @@ def depthSearch(initialState, finalState):
     if sucess == True:
         print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')
+        dfs.write('-->Caminho da Solução:' + '\n')
         solutionPathPrint(solutionNode)
-        
         dfs.write("-->Tempo: " + str(executionTime) + '\n')
-        dfs.write('-->Caminho da Solução:' + str(solutionPathPrint(solutionNode)) + '\n')
 
         dfs.close()
     else: 

@@ -326,6 +326,7 @@ def aStarSearch(initialState, finalState):
     if sucess == True:
         print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')
+        aStar.write('-->Caminho da Solução:' + '\n')
         solutionPathPrint(solutionNode)
         print('-->Custo A*:', "{:.2f}".format(solutionCost))
         
@@ -333,8 +334,6 @@ def aStarSearch(initialState, finalState):
 
         aStar.write("-->Tempo: " + str(executionTime) + '\n')
         aStar.write('-->Custo A*:' + val + '\n')
-        aStar.write('-->Caminho da Solução:' +
-                    str(solutionPathPrint(solutionNode)) + '\n')
 
         aStar.close()
     else:

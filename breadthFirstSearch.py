@@ -7,50 +7,51 @@ import time
 
 ############################# INICIO ##############################
 bfs = open('bfs.txt', 'w')
-counter = 0 #Counter que foi usado para o printState
-iterationCounter = 0 #Counter que foi usado para printar iterações
-pathList = [] #Lista de Abertos
+counter = 0  # Counter que foi usado para o printState
+iterationCounter = 0  # Counter que foi usado para printar iterações
+pathList = []  # Lista de Abertos
 hashClosedList = []
-closedList = [] #Lista de fechados
-openList = Queue() #Queue é um método FIFO (First In First Out)
+closedList = []  # Lista de fechados
+openList = Queue()  # Queue é um método FIFO (First In First Out)
 iterationCounter = 2
-#Mapa do jogo, o valor das matrizes é a quantidade de blocos(altura)
-matriz = [[0,0,2,0,0,0,0,0],
-          [0,0,2,0,0,0,0,0],
-          [0,0,2,0,0,0,0,0],
-          [0,0,4,4,0,0,0,0],
-          [0,1,2,3,0,0,0,0],
-          [0,0,3,4,0,0,0,0],
-          [0,0,2,2,0,0,0,0],
-          [0,0,0,2,0,0,0,0]]
+# Mapa do jogo, o valor das matrizes é a quantidade de blocos(altura)
+matriz = [[0, 0, 2, 0, 0, 0, 0, 0],
+          [0, 0, 2, 0, 0, 0, 0, 0],
+          [0, 0, 2, 0, 0, 0, 0, 0],
+          [0, 0, 4, 4, 0, 0, 0, 0],
+          [0, 1, 2, 3, 0, 0, 0, 0],
+          [0, 0, 3, 4, 0, 0, 0, 0],
+          [0, 0, 2, 2, 0, 0, 0, 0],
+          [0, 0, 0, 2, 0, 0, 0, 0]]
 
-#Obter a direção de acordo com os valores 0,1,2,3
+# Obter a direção de acordo com os valores 0,1,2,3
 turn_rule = ['Norte', 'Leste', 'Sul', 'Oeste']
 
-#Movimentos do robô para cada direção respectiva
+# Movimentos do robô para cada direção respectiva
 movement = {
-    0 : (0, -1), # norte
-    1 : ( 1,0), # leste
-    2 : (0, 1), # sul
-    3 : (-1,0), # oeste
+    0: (0, -1),  # norte
+    1: (1, 0),  # leste
+    2: (0, 1),  # sul
+    3: (-1, 0),  # oeste
 }
-#################################################################### 
+####################################################################
 
 
-######################### AUXILIARES ############################### 
-#Função que irá checar se não existe repetição
+######################### AUXILIARES ###############################
+# Função que irá checar se não existe repetição
 def checkHash(node):
-    robotState = (node.robot.x, node.robot.y, node.robot.direction, node.robot.height, node.robot.firstBlueBlock, node.robot.secondBlueBlock)
+    robotState = (node.robot.x, node.robot.y, node.robot.direction,
+                  node.robot.height, node.robot.firstBlueBlock, node.robot.secondBlueBlock)
     hashNode = hash(robotState)
     for hashValue in hashClosedList:
         if hashValue == hashNode:
-            return True         
+            return True
     return False
-#################################################################### 
+####################################################################
 
 
 ########################### CAMINHO ################################
-#Função que irá percorrer o caminho da solução
+# Função que irá percorrer o caminho da solução
 def getPath(node):
     global pathList
     pathList.append(node)
@@ -58,12 +59,13 @@ def getPath(node):
     while auxNode != None:
         pathList.append(auxNode)
         auxNode = auxNode.getNodeFather()
-    pathList.reverse() 
+    pathList.reverse()
 
-def printFirstIteration(): #Função para printar a iteração inicial com nó raiz
-    stringOpen = str((3,7,0,2,True,False))
+
+def printFirstIteration():  # Função para printar a iteração inicial com nó raiz
+    stringOpen = str((3, 7, 0, 2, True, False))
     stringClosed = ''
-    print('--',str(1) + 'º', 'Iteração')
+    print('--', str(1) + 'º', 'Iteração')
     print('--', 'Abertos:', stringOpen)
     print('--', 'Fechados:', stringClosed)
     print('------------------------------------------------------')
@@ -73,26 +75,29 @@ def printFirstIteration(): #Função para printar a iteração inicial com nó r
     bfs.write('--' + 'Fechados:' + str(stringClosed + '\n'))
     bfs.write(('------------------------------------------------------') + '\n')
 
+
 def printLists():
     global iterationCounter
-    print('--',str(iterationCounter) + 'º', 'Iteração')
-   
+    print('--', str(iterationCounter) + 'º', 'Iteração')
+
     bfs.write('--' + str(iterationCounter) + 'º' + 'Iteração' + '\n')
-    
+
     i = 0
     j = 0
     stringOpen = ''
     stringClosed = ''
     for i in range(openList.qsize()):
-        if i == 0: #Primeiro elemento da lista de abertos
+        if i == 0:  # Primeiro elemento da lista de abertos
             stringOpen = str(openList.queue[i].robot.returnState())
-        else: #Restante dos elementos da lista de abertos
-            stringOpen = stringOpen + ',' + str(openList.queue[i].robot.returnState())
+        else:  # Restante dos elementos da lista de abertos
+            stringOpen = stringOpen + ',' + \
+                str(openList.queue[i].robot.returnState())
     for j in range(len(closedList)):
-        if j == 0: #Primeiro elemento da lista de fechados
+        if j == 0:  # Primeiro elemento da lista de fechados
             stringClosed = str(closedList[j].robot.returnState())
-        else: #Restante dos elementos da lista de fechados
-            stringClosed = stringClosed + ',' + str(closedList[j].robot.returnState())
+        else:  # Restante dos elementos da lista de fechados
+            stringClosed = stringClosed + ',' + \
+                str(closedList[j].robot.returnState())
     print('--', 'Abertos:', stringOpen)
     print('--', 'Fechados:', stringClosed)
     print('------------------------------------------------------')
@@ -101,54 +106,59 @@ def printLists():
     bfs.write('--' + 'Fechados:' + str(stringClosed) + '\n')
     bfs.write('------------------------------------------------------' + '\n')
 
-    iterationCounter+=1
+    iterationCounter += 1
 
-#Função que servirá pra imprimir o caminho solução
+# Função que servirá pra imprimir o caminho solução
+
+
 def solutionPathPrint(node):
     getPath(node)
     count = 0
     for robotState in pathList:
-        print('--',str(count) + 'º', 'Estado')
+        print('--', str(count) + 'º', 'Estado')
         print('| Primeiro bloco azul =', robotState.robot.firstBlueBlock,
-        '| Segundo bloco azul =', robotState.robot.secondBlueBlock, 
-        '| x =', robotState.robot.x, '| y =', robotState.robot.y, 
-        '| Direção =', turn_rule[robotState.robot.direction], '| Altura =',robotState.robot.height, '|')
-            
+              '| Segundo bloco azul =', robotState.robot.secondBlueBlock,
+              '| x =', robotState.robot.x, '| y =', robotState.robot.y,
+              '| Direção =', turn_rule[robotState.robot.direction], '| Altura =', robotState.robot.height, '|')
+
         bfs.write('--' + str(count) + 'º' + 'Estado' + '\n')
         bfs.write('| Primeiro bloco azul =' + str(robotState.robot.firstBlueBlock) +
-        '| Segundo bloco azul =' + str(robotState.robot.secondBlueBlock) + 
-        '| x ='+ str(robotState.robot.x) + '| y =' + str(robotState.robot.y) + 
-        '| Direção =' + str(turn_rule[robotState.robot.direction]) + '| Altura =' + str(robotState.robot.height) + '|' + '\n') 
-        
+                  '| Segundo bloco azul =' + str(robotState.robot.secondBlueBlock) +
+                  '| x =' + str(robotState.robot.x) + '| y =' + str(robotState.robot.y) +
+                  '| Direção =' + str(turn_rule[robotState.robot.direction]) + '| Altura =' + str(robotState.robot.height) + '|' + '\n')
+
         count = count + 1
 ####################################################################
 
 
-############################ ACENDER ############################### 
-#Função que irá checar se o bloco é azul
-def checkLight(node): 
-    if(node.robot.y == 0 and node.robot.x == 2 ):
+############################ ACENDER ###############################
+# Função que irá checar se o bloco é azul
+def checkLight(node):
+    if(node.robot.y == 0 and node.robot.x == 2):
         return True
     return False
 
-#Função que irá gerar um nó filho acendendo ou apagando um bloco azul
+# Função que irá gerar um nó filho acendendo ou apagando um bloco azul
+
+
 def lightUp(node):
     global openList
     copyState = deepcopy(node.robot)
     verify = True
     if checkLight(node) == True:
-        if(node.robot.y == 0 and node.robot.x == 2): #Se for o segundo bloco azul
+        if(node.robot.y == 0 and node.robot.x == 2):  # Se for o segundo bloco azul
             copyState.secondBlueBlock = not copyState.secondBlueBlock
-        auxNode = Node(node, copyState) #Nó filho receberá os valores atualizados
+        # Nó filho receberá os valores atualizados
+        auxNode = Node(node, copyState)
         verify = checkHash(auxNode)
         if verify == False:
             node.setRobotLightUp(auxNode)
-            openList.put(auxNode) #incrementa lista de abertos 
-#################################################################### 
+            openList.put(auxNode)  # incrementa lista de abertos
+####################################################################
 
 
-########################## ANDAR E PULAR ########################### 
-#Função que irá checar qual movimento o robô irá fazer
+########################## ANDAR E PULAR ###########################
+# Função que irá checar qual movimento o robô irá fazer
 def getMovement(node):
     x = node.robot.x + movement[node.robot.direction][0]
     y = node.robot.y + movement[node.robot.direction][1]
@@ -160,9 +170,9 @@ def getMovement(node):
         return 'walk'
     if(nextHeight - height == 1 or nextHeight - height <= -1):
         return 'jump'
-        
 
-#Função para checar se o robô pode ir para uma direção
+
+# Função para checar se o robô pode ir para uma direção
 def checkMovement(node):
     x = node.robot.x + movement[node.robot.direction][0]
     y = node.robot.y + movement[node.robot.direction][1]
@@ -182,11 +192,12 @@ def walk(node):
         copyState.y = copyState.y + movement[node.robot.direction][1]
         auxNode = Node(node, copyState)
         verify = checkHash(auxNode)
-        if (verify == False): #Se não existe repetição
-            if (getMovement(node) == 'walk'): #Verifica qual movimento fazer
+        if (verify == False):  # Se não existe repetição
+            if (getMovement(node) == 'walk'):  # Verifica qual movimento fazer
                 node.setRobotWalk(auxNode)
                 openList.put(auxNode)
-                
+
+
 def jump(node):
     global openList
     copyStateJump = deepcopy(node.robot)
@@ -197,33 +208,33 @@ def jump(node):
         copyStateJump.height = matriz[copyStateJump.y][copyStateJump.x]
         auxNode = Node(node, copyStateJump)
         verify = checkHash(auxNode)
-        if (verify == False): #Se não existe repetição
-            if (getMovement(node) == 'jump'): #Verifica qual movimento fazer
+        if (verify == False):  # Se não existe repetição
+            if (getMovement(node) == 'jump'):  # Verifica qual movimento fazer
                 node.setRobotJump(auxNode)
                 openList.put(auxNode)
-        
+
 ####################################################################
 
 
 ####################### VIRAR PARA ESQUERDA ########################
-#Função que irá gerar um nó filho com a direção do robô virado para a esquerda
+# Função que irá gerar um nó filho com a direção do robô virado para a esquerda
 def turnLeft(node):
-    global openList  
+    global openList
     copyState = deepcopy(node.robot)
-    verify = True #Considero que existe repetição 
+    verify = True  # Considero que existe repetição
     copyState.direction = (copyState.direction - 1) % 4
     auxNode = Node(node, copyState)
-    verify = checkHash(auxNode) #Irá checar se não existe repetição
-    if (verify == False): #Se não existe repetição
+    verify = checkHash(auxNode)  # Irá checar se não existe repetição
+    if (verify == False):  # Se não existe repetição
         node.setRobotTurnLeft(auxNode)
         openList.put(auxNode)
 ####################################################################
 
 
-####################### VIRAR PARA DIREITA ######################### 
-#Função que irá gerar um nó filho com a direção do robô virado para a direita
+####################### VIRAR PARA DIREITA #########################
+# Função que irá gerar um nó filho com a direção do robô virado para a direita
 def turnRight(node):
-    global openList  
+    global openList
     copyState = deepcopy(node.robot)
     verify = True
     copyState.direction = (copyState.direction + 1) % 4
@@ -235,16 +246,16 @@ def turnRight(node):
 ####################################################################
 
 
-#Função que irá realizar a busca em largura
+# Função que irá realizar a busca em largura
 def breadthSearch(initialState, finalState):
     global closedList
-    global openList 
+    global openList
     global pathList
     sucess = False
     failure = False
     solutionNode = None
     root = Node(None, initialState)
-    openList.put(root) 
+    openList.put(root)
     root.setCost(0)
     startTime = time.time()
     printFirstIteration()
@@ -253,9 +264,11 @@ def breadthSearch(initialState, finalState):
             failure = True
             break
         else:
-            node = openList.get() #Metodo get() retira e retorna o primeiro elemento da fila
-            robotState = (node.robot.x, node.robot.y, node.robot.direction, node.robot.height, node.robot.firstBlueBlock, node.robot.secondBlueBlock)
-            final_State = (finalState.x, finalState.y, finalState.direction, finalState.height, finalState.firstBlueBlock, finalState.secondBlueBlock) 
+            node = openList.get()  # Metodo get() retira e retorna o primeiro elemento da fila
+            robotState = (node.robot.x, node.robot.y, node.robot.direction,
+                          node.robot.height, node.robot.firstBlueBlock, node.robot.secondBlueBlock)
+            final_State = (finalState.x, finalState.y, finalState.direction,
+                           finalState.height, finalState.firstBlueBlock, finalState.secondBlueBlock)
             if(robotState == final_State):
                 sucess = True
                 solutionNode = node
@@ -271,25 +284,22 @@ def breadthSearch(initialState, finalState):
                 hashClosedList.append(hashNode)
         printLists()
 
-    
     stopTime = time.time()
     executionTime = stopTime - startTime
 
     if sucess == True:
         print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')
+        bfs.write('-->Caminho da Solução:' + '\n')
         solutionPathPrint(solutionNode)
-        
         bfs.write("-->Tempo: " + str(executionTime) + '\n')
-        bfs.write('-->Caminho da Solução:' + str(solutionPathPrint(solutionNode)) + '\n')
 
         bfs.close()
-    else: 
+    else:
         print("--> Tempo:", executionTime)
         print("Não foi possível encontrar a solução")
-        
+
         bfs.write("-->Tempo: " + str(executionTime) + '\n')
         bfs.write("Não foi possível encontrar a solução \n")
 
         bfs.close()
-

@@ -314,14 +314,13 @@ def greedySearch(initialState, finalState):
         print("-->Tempo:", executionTime)
         print('-->Custo Guloso:', "{:.2f}".format(solutionCost))
         print('-->Caminho da Solução:')
+        gs.write('-->Caminho da Solução:' + '\n')
         solutionPathPrint(solutionNode)
 
         val = "{:.2f}".format(solutionCost)
 
         gs.write("-->Tempo: " + str(executionTime) + '\n')
         gs.write('-->Custo Guloso:'+ val + '\n')
-        gs.write('-->Caminho da Solução:' +
-                 str(solutionPathPrint(solutionNode)) + '\n')
 
         gs.close()
     else:
