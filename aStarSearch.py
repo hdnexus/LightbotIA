@@ -8,6 +8,8 @@ import time
 f = open('example.txt', 'w')
 counter = 0 #Counter que foi usado para o printState
 pathList = [] #Lista de Abertos
+iterationCounter = 2
+costAStar = 0
 hashClosedList = []
 closedList = [] #Lista de fechados
 openList = [] #Queue é um método FIFO (First In First Out)
@@ -61,17 +63,49 @@ def getEuclidean(node):
 #Função que irá percorrer o caminho da solução
 def getPath(node):
     global pathList
+    global solutionCost
+    solutionCost = node.getGreedyCost() + node.getCost()
     pathList.append(node)
     auxNode = node.getNodeFather()
     while auxNode != None:
         pathList.append(auxNode)
+        solutionCost = solutionCost + auxNode.getGreedyCost() + auxNode.getCost()
         auxNode = auxNode.getNodeFather()
     pathList.reverse() 
 
+def printFirstIteration(): #Função para printar a iteração inicial com nó raiz
+    stringOpen = str((3,7,0,2,True,False))
+    stringClosed = ''
+    print('--',str(1) + 'º', 'Iteração')
+    print('--', 'Abertos:', stringOpen)
+    print('--', 'Fechados:', stringClosed)
+    print('------------------------------------------------------')
+
+def printLists():
+    global iterationCounter
+    print('--',str(iterationCounter) + 'º', 'Iteração')
+    i = 0
+    j = 0
+    stringOpen = ''
+    stringClosed = ''
+    for i in range(len(openList)):
+        if i == 0: #Primeiro elemento da lista de abertos
+            stringOpen = str(openList[i].robot.returnState())
+        else: #Restante dos elementos da lista de abertos
+            stringOpen = stringOpen + ',' + str(openList[i].robot.returnState())
+    for j in range(len(closedList)):
+        if j == 0: #Primeiro elemento da lista de fechados
+            stringClosed = str(closedList[j].robot.returnState())
+        else: #Restante dos elementos da lista de fechados
+            stringClosed = stringClosed + ',' + str(closedList[j].robot.returnState())
+    print('--', 'Abertos:', stringOpen)
+    print('--', 'Fechados:', stringClosed)
+    print('------------------------------------------------------')
+    iterationCounter+=1
 #Função que servirá pra imprimir o caminho solução
 def solutionPathPrint(node):
     getPath(node)
-    count = 0
+    count = 1
     for robotState in pathList:
         print('--',str(count) + 'º', 'Estado')
         print('| Primeiro bloco azul =', robotState.robot.firstBlueBlock,
@@ -100,8 +134,8 @@ def lightUp(node):
         auxNode = Node(node, copyState) #Nó filho receberá os valores atualizados
         verify = checkHash(auxNode)
         if verify == False:
-            auxNode.setCost(node.getCost() + getManhattan(auxNode))
-            auxNode.setGreedyCost(node.getGreedyCost() + getEuclidean(auxNode)) 
+            auxNode.setCost(getManhattan(auxNode))
+            auxNode.setGreedyCost(getEuclidean(auxNode)) 
             node.setRobotLightUp(auxNode)
             openList.append(auxNode) #incrementa lista de abertos 
 #################################################################### 
@@ -144,8 +178,8 @@ def walk(node):
         verify = checkHash(auxNode)
         if (verify == False): #Se não existe repetição
             if (getMovement(node) == 'walk'): #Verifica qual movimento fazer
-                auxNode.setCost(node.getCost() + getManhattan(auxNode))
-                auxNode.setGreedyCost(node.getGreedyCost() + getEuclidean(auxNode)) #Calcula o custo guloso
+                auxNode.setCost(getManhattan(auxNode))
+                auxNode.setGreedyCost(getEuclidean(auxNode)) #Calcula o custo guloso
                 node.setRobotWalk(auxNode)
                 openList.append(auxNode)
                 
@@ -163,8 +197,8 @@ def jump(node):
         verify = checkHash(auxNode)
         if (verify == False): #Se não existe repetição
             if (getMovement(node) == 'jump'): #Verifica qual movimento fazer
-                auxNode.setCost(node.getCost() + getManhattan(auxNode))
-                auxNode.setGreedyCost(node.getGreedyCost() + getEuclidean(auxNode)) 
+                auxNode.setCost(getManhattan(auxNode))
+                auxNode.setGreedyCost(getEuclidean(auxNode)) 
                 node.setRobotJump(auxNode)
                 openList.append(auxNode)
         
@@ -181,8 +215,8 @@ def turnLeft(node):
     auxNode = Node(node, copyState)
     verify = checkHash(auxNode) #Irá checar se não existe repetição
     if (verify == False): #Se não existe repetição
-        auxNode.setCost(node.getCost() + getManhattan(auxNode))
-        auxNode.setGreedyCost(node.getGreedyCost() + getEuclidean(auxNode))
+        auxNode.setCost(getManhattan(auxNode))
+        auxNode.setGreedyCost(getEuclidean(auxNode))
         node.setRobotTurnLeft(auxNode)
         openList.append(auxNode)
 ####################################################################
@@ -198,8 +232,8 @@ def turnRight(node):
     auxNode = Node(node, copyState)
     verify = checkHash(auxNode)
     if (verify == False):
-        auxNode.setCost(node.getCost() + getManhattan(auxNode))
-        auxNode.setGreedyCost(node.getGreedyCost() + getEuclidean(auxNode))
+        auxNode.setCost(getManhattan(auxNode))
+        auxNode.setGreedyCost(getEuclidean(auxNode))
         node.setRobotTurnLeft(auxNode)
         openList.append(auxNode)
 ####################################################################
@@ -218,20 +252,22 @@ def aStarSearch(initialState, finalState):
     root.setGreedyCost(0)
     root.setCost(0)
     startTime = time.time()
+    printFirstIteration()
     while failure == False and sucess == False:
         if len(openList) == 0:
             failure = True
             break
         else:
             i = 0
+            j = 0
             lower = -1
             for i in range(len(openList)):
                 if (openList[i].getCost() + openList[i].getGreedyCost()) < lower or lower == -1:
                     lower = openList[i].getCost() + openList[i].getGreedyCost()
-            i = 0
-            for i in range(len(openList)):
-                if (openList[i].getCost() + openList[i].getGreedyCost()) == lower:
-                    node = openList.pop(i)
+                    
+            for j in range(len(openList)):
+                if (openList[j].getCost() + openList[j].getGreedyCost()) == lower:
+                    node = openList.pop(j)
                     break
 
             robotState = (node.robot.x, node.robot.y, node.robot.direction, node.robot.height, node.robot.firstBlueBlock, node.robot.secondBlueBlock)
@@ -246,18 +282,18 @@ def aStarSearch(initialState, finalState):
                 turnLeft(node)
                 turnRight(node)
                 hashNode = hash(robotState)
+                closedList.append(node)
                 hashClosedList.append(hashNode)
-
+        printLists()
     f.close()
     stopTime = time.time()
     executionTime = stopTime - startTime
 
     if sucess == True:
         print("-->Tempo:", executionTime)
-        print('-->Custo A*:', solutionNode.getGreedyCost() + solutionNode.getCost())
-        print('-->Quantidade de estados que foram fechados: ', len(hashClosedList))
         print('-->Caminho da Solução:')
         solutionPathPrint(solutionNode)
+        print('-->Custo A*:', "{:.2f}".format(solutionCost))
     else: 
         print("--> Tempo:", executionTime)
         print("Não foi possível encontrar a solução")

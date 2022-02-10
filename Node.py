@@ -12,11 +12,6 @@ class Node():
         self.robot = robot #estado do nó
 
     
-    def setRobot(self, robot):
-        self.robot = robot
-    def getRobot(self):
-        return self.robot
-    
     def getRobotWalk(self):
         return self.robotWalk
     def setRobotWalk(self, node):

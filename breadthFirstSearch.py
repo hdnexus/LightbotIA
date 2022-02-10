@@ -8,11 +8,12 @@ import time
 ############################# INICIO ##############################
 f = open('example.txt', 'w')
 counter = 0 #Counter que foi usado para o printState
+iterationCounter = 0 #Counter que foi usado para printar iterações
 pathList = [] #Lista de Abertos
 hashClosedList = []
 closedList = [] #Lista de fechados
 openList = Queue() #Queue é um método FIFO (First In First Out)
-
+iterationCounter = 2
 #Mapa do jogo, o valor das matrizes é a quantidade de blocos(altura)
 matriz = [[0,0,2,0,0,0,0,0],
           [0,0,2,0,0,0,0,0],
@@ -59,6 +60,36 @@ def getPath(node):
         auxNode = auxNode.getNodeFather()
     pathList.reverse() 
 
+def printFirstIteration(): #Função para printar a iteração inicial com nó raiz
+    stringOpen = str((3,7,0,2,True,False))
+    stringClosed = ''
+    print('--',str(1) + 'º', 'Iteração')
+    print('--', 'Abertos:', stringOpen)
+    print('--', 'Fechados:', stringClosed)
+    print('------------------------------------------------------')
+
+def printLists():
+    global iterationCounter
+    print('--',str(iterationCounter) + 'º', 'Iteração')
+    i = 0
+    j = 0
+    stringOpen = ''
+    stringClosed = ''
+    for i in range(openList.qsize()):
+        if i == 0: #Primeiro elemento da lista de abertos
+            stringOpen = str(openList.queue[i].robot.returnState())
+        else: #Restante dos elementos da lista de abertos
+            stringOpen = stringOpen + ',' + str(openList.queue[i].robot.returnState())
+    for j in range(len(closedList)):
+        if j == 0: #Primeiro elemento da lista de fechados
+            stringClosed = str(closedList[j].robot.returnState())
+        else: #Restante dos elementos da lista de fechados
+            stringClosed = stringClosed + ',' + str(closedList[j].robot.returnState())
+    print('--', 'Abertos:', stringOpen)
+    print('--', 'Fechados:', stringClosed)
+    print('------------------------------------------------------')
+    iterationCounter+=1
+
 #Função que servirá pra imprimir o caminho solução
 def solutionPathPrint(node):
     getPath(node)
@@ -91,7 +122,6 @@ def lightUp(node):
         auxNode = Node(node, copyState) #Nó filho receberá os valores atualizados
         verify = checkHash(auxNode)
         if verify == False:
-            auxNode.setCost(node.getCost() + 1) 
             node.setRobotLightUp(auxNode)
             openList.put(auxNode) #incrementa lista de abertos 
 #################################################################### 
@@ -131,16 +161,12 @@ def walk(node):
         copyState.x = copyState.x + movement[node.robot.direction][0]
         copyState.y = copyState.y + movement[node.robot.direction][1]
         auxNode = Node(node, copyState)
-        
         verify = checkHash(auxNode)
         if (verify == False): #Se não existe repetição
             if (getMovement(node) == 'walk'): #Verifica qual movimento fazer
-                auxNode.setCost(node.getCost() + 1) 
                 node.setRobotWalk(auxNode)
                 openList.put(auxNode)
                 
-                
-
 def jump(node):
     global openList
     copyStateJump = deepcopy(node.robot)
@@ -153,7 +179,6 @@ def jump(node):
         verify = checkHash(auxNode)
         if (verify == False): #Se não existe repetição
             if (getMovement(node) == 'jump'): #Verifica qual movimento fazer
-                auxNode.setCost(node.getCost() + 1) 
                 node.setRobotJump(auxNode)
                 openList.put(auxNode)
         
@@ -170,7 +195,6 @@ def turnLeft(node):
     auxNode = Node(node, copyState)
     verify = checkHash(auxNode) #Irá checar se não existe repetição
     if (verify == False): #Se não existe repetição
-        auxNode.setCost(node.getCost() + 1)
         node.setRobotTurnLeft(auxNode)
         openList.put(auxNode)
 ####################################################################
@@ -186,7 +210,6 @@ def turnRight(node):
     auxNode = Node(node, copyState)
     verify = checkHash(auxNode)
     if (verify == False):
-        auxNode.setCost(node.getCost() + 1)
         node.setRobotTurnLeft(auxNode)
         openList.put(auxNode)
 ####################################################################
@@ -204,6 +227,7 @@ def breadthSearch(initialState, finalState):
     openList.put(root) 
     root.setCost(0)
     startTime = time.time()
+    printFirstIteration()
     while failure == False and sucess == False:
         if openList.empty() == True:
             failure = True
@@ -222,16 +246,15 @@ def breadthSearch(initialState, finalState):
                 turnLeft(node)
                 turnRight(node)
                 hashNode = hash(robotState)
+                closedList.append(node)
                 hashClosedList.append(hashNode)
-
+        printLists()
     f.close()
     stopTime = time.time()
     executionTime = stopTime - startTime
 
     if sucess == True:
         print("-->Tempo:", executionTime)
-        print('-->Custo:', solutionNode.getCost())
-        print('-->Quantidade de estados que foram fechados: ', len(hashClosedList))
         print('-->Caminho da Solução:')
         solutionPathPrint(solutionNode)
     else: 
