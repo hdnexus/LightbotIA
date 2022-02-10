@@ -2,7 +2,7 @@
 
 >Atividade para a disciplina de inteligência artificial - UFJF
 
-## Autor
+## Autores
 
 👤 **Gabriel Martins**
 
