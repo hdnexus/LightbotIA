@@ -115,7 +115,6 @@ def printLists():
     gs.write('--' + 'Fechados:' + str(stringClosed) + '\n')
     gs.write('------------------------------------------------------' + '\n')
 
-
     iterationCounter += 1
 # Função que servirá pra imprimir o caminho solução
 
