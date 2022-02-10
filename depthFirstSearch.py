@@ -68,9 +68,17 @@ def printFirstIteration(): #Função para printar a iteração inicial com nó r
     print('--', 'Fechados:', stringClosed)
     print('------------------------------------------------------')
 
+    dfs.write('--' + str(1) + 'º' + 'Iteração' + '\n')
+    dfs.write('--' + 'Abertos:' + str(stringOpen) + '\n')
+    dfs.write('--' + 'Fechados:' + str(stringClosed + '\n'))
+    dfs.write(('------------------------------------------------------') + '\n')
+
 def printLists():
     global iterationCounter
     print('--',str(iterationCounter) + 'º', 'Iteração')
+
+    dfs.write('--' + str(iterationCounter) + 'º' + 'Iteração' + '\n')
+
     i = 0
     j = 0
     stringOpen = ''
@@ -88,6 +96,11 @@ def printLists():
     print('--', 'Abertos:', stringOpen)
     print('--', 'Fechados:', stringClosed)
     print('------------------------------------------------------')
+
+    dfs.write('--' + 'Abertos:' + str(stringOpen) + '\n')
+    dfs.write('--' + 'Fechados:' + str(stringClosed) + '\n')
+    dfs.write('------------------------------------------------------' + '\n')
+
     iterationCounter+=1
 
 #Função que servirá pra imprimir o caminho solução
@@ -100,6 +113,13 @@ def solutionPathPrint(node):
         '| Segundo bloco azul =', robotState.robot.secondBlueBlock, 
         '| x =', robotState.robot.x, '| y =', robotState.robot.y, 
         '| Direção =', turn_rule[robotState.robot.direction], '| Altura =',robotState.robot.height, '|')
+           
+        dfs.write('--' + str(count) + 'º' + 'Estado' + '\n')
+        dfs.write('| Primeiro bloco azul =' + str(robotState.robot.firstBlueBlock) +
+        '| Segundo bloco azul =' + str(robotState.robot.secondBlueBlock) + 
+        '| x ='+ str(robotState.robot.x) + '| y =' + str(robotState.robot.y) + 
+        '| Direção =' + str(turn_rule[robotState.robot.direction]) + '| Altura =' + str(robotState.robot.height) + '|' + '\n') 
+        
         count = count + 1
 ####################################################################
 
@@ -255,7 +275,7 @@ def depthSearch(initialState, finalState):
                 hashNode = hash(robotState)
                 hashClosedList.append(hashNode)
         printLists()
-    dfs.close()
+    
     stopTime = time.time()
     executionTime = stopTime - startTime
 
@@ -263,7 +283,17 @@ def depthSearch(initialState, finalState):
         print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')
         solutionPathPrint(solutionNode)
-    else:
+        
+        dfs.write("-->Tempo: " + str(executionTime) + '\n')
+        dfs.write('-->Caminho da Solução:' + str(solutionPathPrint(solutionNode)) + '\n')
+
+        dfs.close()
+    else: 
         print("--> Tempo:", executionTime)
         print("Não foi possível encontrar a solução")
+        
+        dfs.write("-->Tempo: " + str(executionTime) + '\n')
+        dfs.write("Não foi possível encontrar a solução \n")
+
+        dfs.close()
 
