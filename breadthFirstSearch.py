@@ -68,9 +68,17 @@ def printFirstIteration(): #Função para printar a iteração inicial com nó r
     print('--', 'Fechados:', stringClosed)
     print('------------------------------------------------------')
 
+    bfs.write('--' + str(1) + 'º' + 'Iteração' + '\n')
+    bfs.write('--' + 'Abertos:' + str(stringOpen) + '\n')
+    bfs.write('--' + 'Fechados:' + str(stringClosed + '\n'))
+    bfs.write(('------------------------------------------------------') + '\n')
+
 def printLists():
     global iterationCounter
     print('--',str(iterationCounter) + 'º', 'Iteração')
+   
+    bfs.write('--' + str(iterationCounter) + 'º' + 'Iteração' + '\n')
+    
     i = 0
     j = 0
     stringOpen = ''
@@ -88,6 +96,11 @@ def printLists():
     print('--', 'Abertos:', stringOpen)
     print('--', 'Fechados:', stringClosed)
     print('------------------------------------------------------')
+
+    bfs.write('--' + 'Abertos:' + str(stringOpen) + '\n')
+    bfs.write('--' + 'Fechados:' + str(stringClosed) + '\n')
+    bfs.write('------------------------------------------------------' + '\n')
+
     iterationCounter+=1
 
 #Função que servirá pra imprimir o caminho solução
@@ -100,6 +113,13 @@ def solutionPathPrint(node):
         '| Segundo bloco azul =', robotState.robot.secondBlueBlock, 
         '| x =', robotState.robot.x, '| y =', robotState.robot.y, 
         '| Direção =', turn_rule[robotState.robot.direction], '| Altura =',robotState.robot.height, '|')
+            
+        bfs.write('--' + str(count) + 'º' + 'Estado' + '\n')
+        bfs.write('| Primeiro bloco azul =' + str(robotState.robot.firstBlueBlock) +
+        '| Segundo bloco azul =' + str(robotState.robot.secondBlueBlock) + 
+        '| x ='+ str(robotState.robot.x) + '| y =' + str(robotState.robot.y) + 
+        '| Direção =' + str(turn_rule[robotState.robot.direction]) + '| Altura =' + str(robotState.robot.height) + '|' + '\n') 
+        
         count = count + 1
 ####################################################################
 
@@ -239,6 +259,7 @@ def breadthSearch(initialState, finalState):
             if(robotState == final_State):
                 sucess = True
                 solutionNode = node
+                break
             else:
                 lightUp(node)
                 walk(node)
@@ -249,7 +270,8 @@ def breadthSearch(initialState, finalState):
                 closedList.append(node)
                 hashClosedList.append(hashNode)
         printLists()
-    bfs.close()
+
+    
     stopTime = time.time()
     executionTime = stopTime - startTime
 
@@ -257,7 +279,17 @@ def breadthSearch(initialState, finalState):
         print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')
         solutionPathPrint(solutionNode)
+        
+        bfs.write("-->Tempo: " + str(executionTime) + '\n')
+        bfs.write('-->Caminho da Solução:' + str(solutionPathPrint(solutionNode)) + '\n')
+
+        bfs.close()
     else: 
         print("--> Tempo:", executionTime)
         print("Não foi possível encontrar a solução")
+        
+        bfs.write("-->Tempo: " + str(executionTime) + '\n')
+        bfs.write("Não foi possível encontrar a solução \n")
+
+        bfs.close()
 
