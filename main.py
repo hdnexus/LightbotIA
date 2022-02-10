@@ -5,7 +5,7 @@ from breadthFirstSearch import breadthSearch
 from orderedSearch import orderedSearch
 from depthFirstSearch import depthSearch
 from greedySearch import greedySearch
-from AstarSearch import aStarSearch 
+from aStarSearch import aStarSearch 
 
 #Estado inicial do problema
 initial_state = Robot(3,7,0,2,True,False)
