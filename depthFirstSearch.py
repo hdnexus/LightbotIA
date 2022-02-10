@@ -6,7 +6,7 @@ import time
 
 
 ############################# INICIO ##############################
-f = open('example.txt', 'w')
+dfs = open('dfs.txt', 'w')
 counter = 0 #Counter que foi usado para o printState
 pathList = [] #Lista de Abertos
 hashClosedList = []
@@ -255,7 +255,7 @@ def depthSearch(initialState, finalState):
                 hashNode = hash(robotState)
                 hashClosedList.append(hashNode)
         printLists()
-    f.close()
+    dfs.close()
     stopTime = time.time()
     executionTime = stopTime - startTime
 

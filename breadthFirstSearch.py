@@ -6,7 +6,7 @@ import time
 
 
 ############################# INICIO ##############################
-f = open('example.txt', 'w')
+bfs = open('bfs.txt', 'w')
 counter = 0 #Counter que foi usado para o printState
 iterationCounter = 0 #Counter que foi usado para printar iterações
 pathList = [] #Lista de Abertos
@@ -249,7 +249,7 @@ def breadthSearch(initialState, finalState):
                 closedList.append(node)
                 hashClosedList.append(hashNode)
         printLists()
-    f.close()
+    bfs.close()
     stopTime = time.time()
     executionTime = stopTime - startTime
 
