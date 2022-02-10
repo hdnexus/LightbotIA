@@ -1,6 +1,6 @@
 <h1>:bookmark_tabs: Trabalho IA - Lightbot</h1>
 
->Atividade para a disciplina de inteligência artificial - UFJF
+>Trabalho para a disciplina de inteligência artificial - UFJF
 
 ## Autores
 
