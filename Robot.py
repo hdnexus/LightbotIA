@@ -11,6 +11,4 @@ class Robot:
     def returnState(self):
         return (self.x, self.y, self.direction, self.height, self.firstBlueBlock, self.secondBlueBlock)
     
-    def __hash__(self):
-        return hash(( self.x, self.y, self.direction, self.height ))
-   
+

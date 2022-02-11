@@ -5,8 +5,8 @@ import time
 
 
 ############################# INICIO ##############################
-os = open('os.txt', 'w')
-tree = open('tree-os.txt', 'w')
+os = open('2_ordered.txt', 'w')
+tree = open('2_ordered-tree.txt', 'w')
 pathList = []  # Lista de Abertos
 hashClosedList = []
 solutionCost = 0
@@ -155,8 +155,7 @@ def lightUp(node):
     copyState = deepcopy(node.robot)
     verify = True
     if checkLight(node) == True:
-        if(node.robot.y == 0 and node.robot.x == 2):  # Se for o segundo bloco azul
-            copyState.secondBlueBlock = not copyState.secondBlueBlock
+        copyState.secondBlueBlock = not copyState.secondBlueBlock
         # Nó filho receberá os valores atualizados
         auxNode = Node(node, copyState)
         verify = checkHash(auxNode)
@@ -328,21 +327,18 @@ def orderedSearch(initialState, finalState):
     executionTime = stopTime - startTime
     tree.close()
     if sucess == True:
-        print("-->Tempo:", executionTime)
-        print('-->Custo:', solutionCost)
         print('-->Caminho da Solução:')
-        os.write("-->Tempo: " + str(executionTime) + '\n')
+        os.write('-->Caminho da Solução:' + '\n')
         solutionPathPrint(solutionNode)
-
-        os.write('-->Custo:' + '\n')
-        os.write('-->Caminho da Solução:' +
-                 str(solutionPathPrint(solutionNode)) + '\n')
-
+        val = "{:.2f}".format(solutionCost)
+        print('-->Custo Real:', val)
+        os.write('-->Custo Real:'+ val + '\n')
+        print("-->Tempo:", executionTime)
+        os.write("-->Tempo: " + str(executionTime) + '\n')
         os.close()
     else:
         print("--> Tempo:", executionTime)
         print("Não foi possível encontrar a solução")
-
         os.write("-->Tempo: " + str(executionTime) + '\n')
         os.write("Não foi possível encontrar a solução \n")
 

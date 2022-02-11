@@ -5,8 +5,8 @@ import time
 
 
 ############################# INICIO ##############################
-aStar = open('aStar.txt', 'w')
-tree = open('tree-aStar.txt', 'w')
+aStar = open('2_aStar.txt', 'w')
+tree = open('2_aStar-tree.txt', 'w')
 counter = 0  # Counter que foi usado para o printState
 pathList = []  # Lista de Abertos
 iterationCounter = 2
@@ -337,17 +337,14 @@ def aStarSearch(initialState, finalState):
     executionTime = stopTime - startTime
     tree.close()
     if sucess == True:
-        print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')
         aStar.write('-->Caminho da Solução:' + '\n')
         solutionPathPrint(solutionNode)
-        print('-->Custo A*:', "{:.2f}".format(solutionCost))
-        
         val = "{:.2f}".format(solutionCost)
-
+        print('-->Custo A*:', val)
+        aStar.write('-->Custo A*:'+ val + '\n')
+        print("-->Tempo:", executionTime)
         aStar.write("-->Tempo: " + str(executionTime) + '\n')
-        aStar.write('-->Custo A*:' + val + '\n')
-
         aStar.close()
     else:
         print("--> Tempo:", executionTime)

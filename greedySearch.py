@@ -5,8 +5,8 @@ import time
 
 
 ############################# INICIO ##############################
-gs = open('gs.txt', 'w')
-tree = open('tree-gs.txt','w')
+gs = open('2_greedy.txt', 'w')
+tree = open('2_greedy-tree.txt','w')
 counter = 0  # Counter que foi usado para o printState
 pathList = []  # Lista de Abertos
 hashClosedList = []
@@ -155,8 +155,7 @@ def lightUp(node):
     copyState = deepcopy(node.robot)
     verify = True
     if checkLight(node) == True:
-        if(node.robot.y == 0 and node.robot.x == 2):  # Se for o segundo bloco azul
-            copyState.secondBlueBlock = not copyState.secondBlueBlock
+        copyState.secondBlueBlock = not copyState.secondBlueBlock
         # Nó filho receberá os valores atualizados
         auxNode = Node(node, copyState)
         verify = checkHash(auxNode)
@@ -325,18 +324,14 @@ def greedySearch(initialState, finalState):
     executionTime = stopTime - startTime
     tree.close()
     if sucess == True:
-        print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')
         gs.write('-->Caminho da Solução:' + '\n')
         solutionPathPrint(solutionNode)
-
         val = "{:.2f}".format(solutionCost)
-
         print('-->Custo Guloso:', val)
-
-        gs.write("-->Tempo: " + str(executionTime) + '\n')
         gs.write('-->Custo Guloso:'+ val + '\n')
-
+        print("-->Tempo:", executionTime)
+        gs.write("-->Tempo: " + str(executionTime) + '\n')
         gs.close()
     else:
         print("--> Tempo:", executionTime)

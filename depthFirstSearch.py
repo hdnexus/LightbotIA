@@ -1,19 +1,19 @@
 from Node import *
 from Robot import *
 from copy import deepcopy
-from queue import LifoQueue
+from queue import LifoQueue #Queue é um método LIFO (Last In First Out)
 import time
 
 
 ############################# INICIO ##############################
-dfs = open('dfs.txt', 'w')
-tree = open('tree-dfs.txt', 'w')
+dfs = open('1_depth.txt', 'w')
+tree = open('1_depth-tree.txt', 'w')
 counter = 0 #Counter que foi usado para o printState
 pathList = [] #Lista de Abertos
 hashClosedList = []
 iterationCounter = 2
 closedList = [] #Lista de fechados
-openList = LifoQueue() #Queue é um método FIFO (First In First Out)
+openList = LifoQueue() #Lista de abertos recebe uma LifoQueue
 
 #Mapa do jogo, o valor das matrizes é a quantidade de blocos(altura)
 matriz = [[0,0,2,0,0,0,0,0],
@@ -38,11 +38,12 @@ movement = {
 #################################################################### 
 
 def appendTree(nodeFather, nodeChild):
-    if nodeFather:
+    if nodeFather != None:
         # A posição na lista é o identificador do nó
         indexFather = closedList.index(nodeFather)
         indexChild = closedList.index(nodeChild)
-
+        #Father = closedList[indexFather].robot.returnState()
+        #Child = closedList[indexChild].robot.returnState()
         #  Escreva adjacência na lista
         tree.write(str(indexFather) + " -> " + str(indexChild) + ";\n")
 
@@ -146,9 +147,8 @@ def lightUp(node):
     global openList
     copyState = deepcopy(node.robot)
     verify = True
-    if checkLight(node) == True:
-        if(node.robot.y == 0 and node.robot.x == 2): 
-            copyState.secondBlueBlock = not copyState.secondBlueBlock
+    if checkLight(node) == True:  
+        copyState.secondBlueBlock = not copyState.secondBlueBlock
         auxNode = Node(node, copyState) #Nó filho receberá os valores atualizados
         verify = checkHash(auxNode)
         if verify == False:
@@ -263,14 +263,14 @@ def depthSearch(initialState, finalState):
     solutionNode = None
     root = Node(None, initialState)
     openList.put(root) 
-    root.setCost(0)
     startTime = time.time()
+    printFirstIteration()
     while failure == False and sucess == False:
         if openList.empty() == True:
             failure = True
             break
         else:
-            node = openList.get() #Metodo get() retira e retorna o primeiro elemento da fila
+            node = openList.get() #Metodo get() com LifoQueue retira e retorna o ultima elemento da fila
             robotState = (node.robot.x, node.robot.y, node.robot.direction, node.robot.height, node.robot.firstBlueBlock, node.robot.secondBlueBlock)
             final_State = (finalState.x, finalState.y, finalState.direction, finalState.height, finalState.firstBlueBlock, finalState.secondBlueBlock) 
             if(robotState == final_State):
@@ -294,12 +294,11 @@ def depthSearch(initialState, finalState):
     executionTime = stopTime - startTime
     tree.close()
     if sucess == True:
-        print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')
         dfs.write('-->Caminho da Solução:' + '\n')
         solutionPathPrint(solutionNode)
+        print("-->Tempo:", executionTime)
         dfs.write("-->Tempo: " + str(executionTime) + '\n')
-
         dfs.close()
     else: 
         print("--> Tempo:", executionTime)

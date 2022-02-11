@@ -1,17 +1,17 @@
 from Node import *
 from Robot import *
 from copy import deepcopy
-from queue import Queue
+from queue import Queue #Queue é um método FIFO (First In First Out)
 import time
 
 
 ############################# INICIO ##############################
-bfs = open('bfs.txt', 'w')
-tree = open('tree-bfs.txt','w')
+bfs = open('1_breadth.txt', 'w')
+tree = open('1_breadth-tree.txt','w')
 counter = 0  # Counter que foi usado para o printState
 iterationCounter = 0  # Counter que foi usado para printar iterações
 pathList = []  # Lista de Abertos
-hashClosedList = []
+hashClosedList = [] # Lista hash que irá guardar os estados já visitados
 closedList = []  # Lista de fechados
 openList = Queue()  # Queue é um método FIFO (First In First Out)
 iterationCounter = 2
@@ -62,7 +62,7 @@ def getPath(node):
         auxNode = auxNode.getNodeFather()
     pathList.reverse()
 
-
+#Printa a primeira iteração
 def printFirstIteration():  # Função para printar a iteração inicial com nó raiz
     stringOpen = str((3, 7, 0, 2, True, False))
     stringClosed = ''
@@ -76,11 +76,10 @@ def printFirstIteration():  # Função para printar a iteração inicial com nó
     bfs.write('--' + 'Fechados:' + str(stringClosed + '\n'))
     bfs.write(('------------------------------------------------------') + '\n')
 
-
+#Printa a lista de abertos e fechados
 def printLists():
     global iterationCounter
     print('--', str(iterationCounter) + 'º', 'Iteração')
-
     bfs.write('--' + str(iterationCounter) + 'º' + 'Iteração' + '\n')
 
     i = 0
@@ -110,8 +109,6 @@ def printLists():
     iterationCounter += 1
 
 # Função que servirá pra imprimir o caminho solução
-
-
 def solutionPathPrint(node):
     getPath(node)
     count = 0
@@ -139,22 +136,18 @@ def checkLight(node):
         return True
     return False
 
-# Função que irá gerar um nó filho acendendo ou apagando um bloco azul
-
-
+# Função que irá gerar um nó filho acendendo um bloco azul
 def lightUp(node):
     global openList
-    copyState = deepcopy(node.robot)
-    verify = True
-    if checkLight(node) == True:
-        if(node.robot.y == 0 and node.robot.x == 2):  # Se for o segundo bloco azul
-            copyState.secondBlueBlock = not copyState.secondBlueBlock
-        # Nó filho receberá os valores atualizados
-        auxNode = Node(node, copyState)
-        verify = checkHash(auxNode)
+    copyState = deepcopy(node.robot) #Copia o estado para altera-lo
+    verify = True #Booleano pra verificar repetição, se já existe esse nó filho na lista de fechados
+    if checkLight(node) == True:    
+        copyState.secondBlueBlock = not copyState.secondBlueBlock #altera o estado do robô
+        auxNode = Node(node, copyState) #Cria um nó filho com o estado alterado
+        verify = checkHash(auxNode) #Verifica se já existe esse nó filho na lista de fechados
         if verify == False:
-            node.setRobotLightUp(auxNode)
-            openList.put(auxNode)  # incrementa lista de abertos
+            node.setRobotLightUp(auxNode) #seta o nó filho com o estado alterado
+            openList.put(auxNode)  #incrementa lista de abertos
 ####################################################################
 
 
@@ -252,12 +245,11 @@ def appendTree(nodeFather, nodeChild):
         # A posição na lista é o identificador do nó
         indexFather = closedList.index(nodeFather)
         indexChild = closedList.index(nodeChild)
-
         #  Escreva adjacência na lista
         tree.write(str(indexFather) + " -> " + str(indexChild) + ";\n")
 
 # Função que irá realizar a busca em largura
-def breadthSearch(initialState, finalState):
+def breadthSearch(initialState, finalState): #Fizemos o código com base no que estava nos slides
     global closedList
     global openList
     global pathList
@@ -266,15 +258,14 @@ def breadthSearch(initialState, finalState):
     solutionNode = None
     root = Node(None, initialState)
     openList.put(root)
-    root.setCost(0)
     startTime = time.time()
     printFirstIteration()
-    while failure == False and sucess == False:
-        if openList.empty() == True:
+    while failure == False and sucess == False: #loop da busca
+        if openList.empty() == True: #se a lista ficou vazia, não achou solução
             failure = True
             break
         else:
-            node = openList.get()  # Metodo get() retira e retorna o primeiro elemento da fila
+            node = openList.get()  # Metodo get() com Queue retira e retorna o primeiro elemento da fila
             robotState = (node.robot.x, node.robot.y, node.robot.direction,
                           node.robot.height, node.robot.firstBlueBlock, node.robot.secondBlueBlock)
             final_State = (finalState.x, finalState.y, finalState.direction,
@@ -302,12 +293,11 @@ def breadthSearch(initialState, finalState):
 
     tree.close()
     if sucess == True:
-        print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')
         bfs.write('-->Caminho da Solução:' + '\n')
         solutionPathPrint(solutionNode)
+        print("-->Tempo:", executionTime)
         bfs.write("-->Tempo: " + str(executionTime) + '\n')
-
         bfs.close()
     else:
         print("--> Tempo:", executionTime)
