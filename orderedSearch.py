@@ -6,6 +6,7 @@ import time
 
 ############################# INICIO ##############################
 os = open('os.txt', 'w')
+tree = open('tree-os.txt', 'w')
 pathList = []  # Lista de Abertos
 hashClosedList = []
 solutionCost = 0
@@ -258,6 +259,16 @@ def turnRight(node):
         openList.append(auxNode)
 ####################################################################
 
+def appendTree(nodeFather, nodeChild):
+    if nodeFather:
+        # A posição na lista é o identificador do nó
+        indexFather = closedList.index(nodeFather)
+        indexChild = closedList.index(nodeChild)
+
+        #  Escreva adjacência na lista
+        tree.write(str(indexFather) + " -> " + str(indexChild) + ";\n")
+
+
 
 # Função que irá realizar a busca ordenada
 def orderedSearch(initialState, finalState):
@@ -296,6 +307,8 @@ def orderedSearch(initialState, finalState):
             if(robotState == final_State):
                 sucess = True
                 solutionNode = node
+                closedList.append(node)
+                appendTree(node.getNodeFather(),node)
             else:
                 lightUp(node)
                 walk(node)
@@ -305,13 +318,15 @@ def orderedSearch(initialState, finalState):
                 hashNode = hash(robotState)
                 # Lista de fechados usada para impressão de iteração
                 closedList.append(node)
+                appendTree(node.getNodeFather(),node)
+
                 # Lista de fechados usada para verificar repetição
                 hashClosedList.append(hashNode)
         printLists()
 
     stopTime = time.time()
     executionTime = stopTime - startTime
-
+    tree.close()
     if sucess == True:
         print("-->Tempo:", executionTime)
         print('-->Custo:', solutionCost)

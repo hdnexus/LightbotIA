@@ -1,147 +1,147 @@
---1ºIteração
+--1ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 0, 2, True, False)
 --Fechados:
 ------------------------------------------------------
---2ºIteração
+--2ÂºIteraÃ§Ã£o
 --Abertos:(3, 6, 0, 2, True, False),(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False)
 ------------------------------------------------------
---3ºIteração
+--3ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 3, 2, True, False),(3, 6, 1, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False)
 ------------------------------------------------------
---4ºIteração
+--4ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(2, 6, 3, 2, True, False),(3, 6, 2, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False)
 ------------------------------------------------------
---5ºIteração
+--5ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False)
 ------------------------------------------------------
---6ºIteração
+--6ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 6, 1, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False)
 ------------------------------------------------------
---7ºIteração
+--7ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 0, 3, True, False),(2, 6, 1, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False)
 ------------------------------------------------------
---8ºIteração
+--8ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 4, 0, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False)
 ------------------------------------------------------
---9ºIteração
+--9ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False)
 ------------------------------------------------------
---10ºIteração
+--10ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 4, 1, 2, True, False),(1, 4, 3, 1, True, False),(2, 4, 2, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False)
 ------------------------------------------------------
---11ºIteração
+--11ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(1, 4, 3, 1, True, False),(2, 4, 2, 2, True, False),(3, 4, 1, 3, True, False),(2, 4, 2, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False)
 ------------------------------------------------------
---12ºIteração
+--12ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(2, 4, 2, 2, True, False),(2, 5, 2, 3, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False)
 ------------------------------------------------------
---13ºIteração
+--13ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False)
 ------------------------------------------------------
---14ºIteração
+--14ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(3, 4, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False)
 ------------------------------------------------------
---15ºIteração
+--15ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 4, 2, 3, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False)
 ------------------------------------------------------
---16ºIteração
+--16ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False)
 ------------------------------------------------------
---17ºIteração
+--17ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 0, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False)
 ------------------------------------------------------
---18ºIteração
+--18ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False),(3, 3, 0, 4, True, False),(3, 4, 3, 3, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False)
 ------------------------------------------------------
---19ºIteração
+--19ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False),(3, 4, 3, 3, True, False),(3, 3, 3, 4, True, False),(3, 3, 1, 4, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 3, 0, 4, True, False)
 ------------------------------------------------------
---20ºIteração
+--20ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False),(3, 4, 3, 3, True, False),(3, 3, 1, 4, True, False),(2, 3, 3, 4, True, False),(3, 3, 2, 4, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 3, 0, 4, True, False),(3, 3, 3, 4, True, False)
 ------------------------------------------------------
---21ºIteração
+--21ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False),(3, 4, 3, 3, True, False),(3, 3, 1, 4, True, False),(3, 3, 2, 4, True, False),(2, 3, 2, 4, True, False),(2, 3, 0, 4, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 3, 0, 4, True, False),(3, 3, 3, 4, True, False),(2, 3, 3, 4, True, False)
 ------------------------------------------------------
---22ºIteração
+--22ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False),(3, 4, 3, 3, True, False),(3, 3, 1, 4, True, False),(3, 3, 2, 4, True, False),(2, 3, 0, 4, True, False),(2, 3, 1, 4, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 3, 0, 4, True, False),(3, 3, 3, 4, True, False),(2, 3, 3, 4, True, False),(2, 3, 2, 4, True, False)
 ------------------------------------------------------
---23ºIteração
+--23ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False),(3, 4, 3, 3, True, False),(3, 3, 1, 4, True, False),(3, 3, 2, 4, True, False),(2, 3, 1, 4, True, False),(2, 2, 0, 2, True, False),(2, 3, 1, 4, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 3, 0, 4, True, False),(3, 3, 3, 4, True, False),(2, 3, 3, 4, True, False),(2, 3, 2, 4, True, False),(2, 3, 0, 4, True, False)
 ------------------------------------------------------
---24ºIteração
+--24ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False),(3, 4, 3, 3, True, False),(3, 3, 1, 4, True, False),(3, 3, 2, 4, True, False),(2, 3, 1, 4, True, False),(2, 3, 1, 4, True, False),(2, 1, 0, 2, True, False),(2, 2, 3, 2, True, False),(2, 2, 1, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 3, 0, 4, True, False),(3, 3, 3, 4, True, False),(2, 3, 3, 4, True, False),(2, 3, 2, 4, True, False),(2, 3, 0, 4, True, False),(2, 2, 0, 2, True, False)
 ------------------------------------------------------
---25ºIteração
+--25ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False),(3, 4, 3, 3, True, False),(3, 3, 1, 4, True, False),(3, 3, 2, 4, True, False),(2, 3, 1, 4, True, False),(2, 3, 1, 4, True, False),(2, 2, 3, 2, True, False),(2, 2, 1, 2, True, False),(2, 0, 0, 2, True, False),(2, 1, 3, 2, True, False),(2, 1, 1, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 3, 0, 4, True, False),(3, 3, 3, 4, True, False),(2, 3, 3, 4, True, False),(2, 3, 2, 4, True, False),(2, 3, 0, 4, True, False),(2, 2, 0, 2, True, False),(2, 1, 0, 2, True, False)
 ------------------------------------------------------
---26ºIteração
+--26ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False),(3, 4, 3, 3, True, False),(3, 3, 1, 4, True, False),(3, 3, 2, 4, True, False),(2, 3, 1, 4, True, False),(2, 3, 1, 4, True, False),(2, 2, 3, 2, True, False),(2, 2, 1, 2, True, False),(2, 1, 3, 2, True, False),(2, 1, 1, 2, True, False),(2, 0, 0, 2, True, True),(2, 0, 3, 2, True, False),(2, 0, 1, 2, True, False)
 --Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 3, 0, 4, True, False),(3, 3, 3, 4, True, False),(2, 3, 3, 4, True, False),(2, 3, 2, 4, True, False),(2, 3, 0, 4, True, False),(2, 2, 0, 2, True, False),(2, 1, 0, 2, True, False),(2, 0, 0, 2, True, False)
 ------------------------------------------------------
---27ºIteração
+--27ÂºIteraÃ§Ã£o
 --Abertos:(3, 7, 3, 2, True, False),(3, 7, 1, 2, True, False),(3, 6, 1, 2, True, False),(3, 6, 2, 2, True, False),(2, 6, 1, 2, True, False),(2, 6, 1, 2, True, False),(2, 5, 3, 3, True, False),(2, 5, 1, 3, True, False),(2, 5, 2, 3, True, False),(2, 5, 2, 3, True, False),(3, 4, 2, 3, True, False),(1, 4, 1, 1, True, False),(1, 4, 1, 1, True, False),(3, 4, 3, 3, True, False),(3, 3, 1, 4, True, False),(3, 3, 2, 4, True, False),(2, 3, 1, 4, True, False),(2, 3, 1, 4, True, False),(2, 2, 3, 2, True, False),(2, 2, 1, 2, True, False),(2, 1, 3, 2, True, False),(2, 1, 1, 2, True, False),(2, 0, 3, 2, True, False),(2, 0, 1, 2, True, False)
---Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 3, 0, 4, True, False),(3, 3, 3, 4, True, False),(2, 3, 3, 4, True, False),(2, 3, 2, 4, True, False),(2, 3, 0, 4, True, False),(2, 2, 0, 2, True, False),(2, 1, 0, 2, True, False),(2, 0, 0, 2, True, False)
+--Fechados:(3, 7, 0, 2, True, False),(3, 6, 0, 2, True, False),(3, 6, 3, 2, True, False),(2, 6, 3, 2, True, False),(2, 6, 2, 2, True, False),(2, 6, 0, 2, True, False),(2, 5, 0, 3, True, False),(2, 4, 0, 2, True, False),(2, 4, 3, 2, True, False),(2, 4, 1, 2, True, False),(2, 4, 2, 2, True, False),(2, 4, 2, 2, True, False),(1, 4, 3, 1, True, False),(3, 4, 1, 3, True, False),(1, 4, 2, 1, True, False),(1, 4, 0, 1, True, False),(3, 4, 0, 3, True, False),(3, 3, 0, 4, True, False),(3, 3, 3, 4, True, False),(2, 3, 3, 4, True, False),(2, 3, 2, 4, True, False),(2, 3, 0, 4, True, False),(2, 2, 0, 2, True, False),(2, 1, 0, 2, True, False),(2, 0, 0, 2, True, False),(2, 0, 0, 2, True, True)
 ------------------------------------------------------
--->Caminho da Solução:
---1ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =7| Direção =Norte| Altura =2|
---2ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =6| Direção =Norte| Altura =2|
---3ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =6| Direção =Oeste| Altura =2|
---4ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =6| Direção =Oeste| Altura =2|
---5ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =6| Direção =Norte| Altura =2|
---6ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =5| Direção =Norte| Altura =3|
---7ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =4| Direção =Norte| Altura =2|
---8ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =4| Direção =Leste| Altura =2|
---9ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =4| Direção =Leste| Altura =3|
---10ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =4| Direção =Norte| Altura =3|
---11ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =3| Direção =Norte| Altura =4|
---12ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =3| Direção =Oeste| Altura =4|
---13ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =3| Direção =Oeste| Altura =4|
---14ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =3| Direção =Norte| Altura =4|
---15ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =2| Direção =Norte| Altura =2|
---16ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =1| Direção =Norte| Altura =2|
---17ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =0| Direção =Norte| Altura =2|
---18ºEstado
-| Primeiro bloco azul =True| Segundo bloco azul =True| x =2| y =0| Direção =Norte| Altura =2|
--->Tempo: 0.08598065376281738
+-->Caminho da SoluÃ§Ã£o:
+--1ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =7| DireÃ§Ã£o =Norte| Altura =2|
+--2ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =6| DireÃ§Ã£o =Norte| Altura =2|
+--3ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =6| DireÃ§Ã£o =Oeste| Altura =2|
+--4ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =6| DireÃ§Ã£o =Oeste| Altura =2|
+--5ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =6| DireÃ§Ã£o =Norte| Altura =2|
+--6ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =5| DireÃ§Ã£o =Norte| Altura =3|
+--7ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =4| DireÃ§Ã£o =Norte| Altura =2|
+--8ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =4| DireÃ§Ã£o =Leste| Altura =2|
+--9ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =4| DireÃ§Ã£o =Leste| Altura =3|
+--10ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =4| DireÃ§Ã£o =Norte| Altura =3|
+--11ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =3| DireÃ§Ã£o =Norte| Altura =4|
+--12ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =3| y =3| DireÃ§Ã£o =Oeste| Altura =4|
+--13ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =3| DireÃ§Ã£o =Oeste| Altura =4|
+--14ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =3| DireÃ§Ã£o =Norte| Altura =4|
+--15ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =2| DireÃ§Ã£o =Norte| Altura =2|
+--16ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =1| DireÃ§Ã£o =Norte| Altura =2|
+--17ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =False| x =2| y =0| DireÃ§Ã£o =Norte| Altura =2|
+--18ÂºEstado
+| Primeiro bloco azul =True| Segundo bloco azul =True| x =2| y =0| DireÃ§Ã£o =Norte| Altura =2|
+-->Tempo: 0.03808712959289551
 -->Custo A*:126.74

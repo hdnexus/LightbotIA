@@ -7,6 +7,7 @@ import time
 
 ############################# INICIO ##############################
 bfs = open('bfs.txt', 'w')
+tree = open('tree-bfs.txt','w')
 counter = 0  # Counter que foi usado para o printState
 iterationCounter = 0  # Counter que foi usado para printar iterações
 pathList = []  # Lista de Abertos
@@ -246,6 +247,15 @@ def turnRight(node):
 ####################################################################
 
 
+def appendTree(nodeFather, nodeChild):
+    if nodeFather:
+        # A posição na lista é o identificador do nó
+        indexFather = closedList.index(nodeFather)
+        indexChild = closedList.index(nodeChild)
+
+        #  Escreva adjacência na lista
+        tree.write(str(indexFather) + " -> " + str(indexChild) + ";\n")
+
 # Função que irá realizar a busca em largura
 def breadthSearch(initialState, finalState):
     global closedList
@@ -272,6 +282,8 @@ def breadthSearch(initialState, finalState):
             if(robotState == final_State):
                 sucess = True
                 solutionNode = node
+                closedList.append(node)
+                appendTree(node.getNodeFather(),node)
                 break
             else:
                 lightUp(node)
@@ -282,11 +294,13 @@ def breadthSearch(initialState, finalState):
                 hashNode = hash(robotState)
                 closedList.append(node)
                 hashClosedList.append(hashNode)
+                appendTree(node.getNodeFather(),node)
         printLists()
 
     stopTime = time.time()
     executionTime = stopTime - startTime
 
+    tree.close()
     if sucess == True:
         print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')

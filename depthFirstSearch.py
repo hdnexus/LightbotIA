@@ -7,6 +7,7 @@ import time
 
 ############################# INICIO ##############################
 dfs = open('dfs.txt', 'w')
+tree = open('tree-dfs.txt', 'w')
 counter = 0 #Counter que foi usado para o printState
 pathList = [] #Lista de Abertos
 hashClosedList = []
@@ -35,6 +36,15 @@ movement = {
     3 : (-1,0), # oeste
 }
 #################################################################### 
+
+def appendTree(nodeFather, nodeChild):
+    if nodeFather:
+        # A posição na lista é o identificador do nó
+        indexFather = closedList.index(nodeFather)
+        indexChild = closedList.index(nodeChild)
+
+        #  Escreva adjacência na lista
+        tree.write(str(indexFather) + " -> " + str(indexChild) + ";\n")
 
 
 ######################### AUXILIARES ############################### 
@@ -266,6 +276,8 @@ def depthSearch(initialState, finalState):
             if(robotState == final_State):
                 sucess = True
                 solutionNode = node
+                closedList.append(node)
+                appendTree(node.getNodeFather(),node)
             else:
                 lightUp(node)
                 walk(node)
@@ -274,11 +286,13 @@ def depthSearch(initialState, finalState):
                 turnRight(node)
                 hashNode = hash(robotState)
                 hashClosedList.append(hashNode)
+                closedList.append(node)
+                appendTree(node.getNodeFather(),node)
         printLists()
     
     stopTime = time.time()
     executionTime = stopTime - startTime
-
+    tree.close()
     if sucess == True:
         print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')

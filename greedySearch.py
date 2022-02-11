@@ -6,6 +6,7 @@ import time
 
 ############################# INICIO ##############################
 gs = open('gs.txt', 'w')
+tree = open('tree-gs.txt','w')
 counter = 0  # Counter que foi usado para o printState
 pathList = []  # Lista de Abertos
 hashClosedList = []
@@ -258,6 +259,16 @@ def turnRight(node):
         openList.append(auxNode)
 ####################################################################
 
+def appendTree(nodeFather, nodeChild):
+    if nodeFather:
+        # A posição na lista é o identificador do nó
+        indexFather = closedList.index(nodeFather)
+        indexChild = closedList.index(nodeChild)
+
+        #  Escreva adjacência na lista
+        tree.write(str(indexFather) + " -> " + str(indexChild) + ";\n")
+
+
 
 # Função que irá realizar a busca gulosa
 def greedySearch(initialState, finalState):
@@ -296,6 +307,8 @@ def greedySearch(initialState, finalState):
             if(robotState == final_State):
                 sucess = True
                 solutionNode = node
+                closedList.append(node)
+                appendTree(node.getNodeFather(),node)
             else:
                 lightUp(node)
                 walk(node)
@@ -304,20 +317,22 @@ def greedySearch(initialState, finalState):
                 turnRight(node)
                 hashNode = hash(robotState)
                 closedList.append(node)
+                appendTree(node.getNodeFather(),node)
                 hashClosedList.append(hashNode)
         printLists()
 
     stopTime = time.time()
     executionTime = stopTime - startTime
-
+    tree.close()
     if sucess == True:
         print("-->Tempo:", executionTime)
-        print('-->Custo Guloso:', "{:.2f}".format(solutionCost))
         print('-->Caminho da Solução:')
         gs.write('-->Caminho da Solução:' + '\n')
         solutionPathPrint(solutionNode)
 
         val = "{:.2f}".format(solutionCost)
+
+        print('-->Custo Guloso:', val)
 
         gs.write("-->Tempo: " + str(executionTime) + '\n')
         gs.write('-->Custo Guloso:'+ val + '\n')

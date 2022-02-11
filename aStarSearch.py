@@ -6,6 +6,7 @@ import time
 
 ############################# INICIO ##############################
 aStar = open('aStar.txt', 'w')
+tree = open('tree-aStar.txt', 'w')
 counter = 0  # Counter que foi usado para o printState
 pathList = []  # Lista de Abertos
 iterationCounter = 2
@@ -270,6 +271,15 @@ def turnRight(node):
         openList.append(auxNode)
 ####################################################################
 
+def appendTree(nodeFather, nodeChild):
+    if nodeFather:
+        # A posição na lista é o identificador do nó
+        indexFather = closedList.index(nodeFather)
+        indexChild = closedList.index(nodeChild)
+
+        #  Escreva adjacência na lista
+        tree.write(str(indexFather) + " -> " + str(indexChild) + ";\n")
+
 
 # Função que irá realizar a busca gulosa
 def aStarSearch(initialState, finalState):
@@ -309,6 +319,8 @@ def aStarSearch(initialState, finalState):
             if(robotState == final_State):
                 sucess = True
                 solutionNode = node
+                closedList.append(node)
+                appendTree(node.getNodeFather(),node)
             else:
                 lightUp(node)
                 walk(node)
@@ -317,12 +329,13 @@ def aStarSearch(initialState, finalState):
                 turnRight(node)
                 hashNode = hash(robotState)
                 closedList.append(node)
+                appendTree(node.getNodeFather(),node)
                 hashClosedList.append(hashNode)
         printLists()
 
     stopTime = time.time()
     executionTime = stopTime - startTime
-
+    tree.close()
     if sucess == True:
         print("-->Tempo:", executionTime)
         print('-->Caminho da Solução:')
